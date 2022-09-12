@@ -24,7 +24,7 @@ public class Test3 {
 		
 		System.out.printf("입력 %d %d %s \n",num1,num2,sign);
 		if (num1 <0 || num2 <0 ){
-		System.out.println("잘못 입력 하셨습니다. 프로그램을 종료합니다.");
+		System.out.println("음수를 입력하샸습니다. 프로그램을 종료합니다.");
 		}else if (sign.equals("+")) {
 			System.out.printf("%d%s%d=%s",num1,sign,num2,sum);
 		}else if(sign.equals("-")) {
@@ -34,7 +34,7 @@ public class Test3 {
 		}else if (sign.equals("*")) {
 			System.out.printf("%d%s%d=%s",num1,sign,num2,multiple);
 		}else {
-			System.out.println("잘못 입력 하셨습니다. 프로그램을 종료합니다.");
+			System.out.println("잘못된기호를 입력하셨습니다. 프로그램을 종료합니다.");
 		}
 			
 		

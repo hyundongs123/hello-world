@@ -40,7 +40,7 @@ public class RandomTest {
 			// 1가위 2바위 3보
 		} else if ((coms == 1 && users == 2) || (coms == 2 && users == 3) || (coms == 3 && users == 1)) {
 			System.out.println("당신이 이겼습니다.");
-		} else {
+		} else if ((coms == 1 && users == 3) || (coms == 2 && users == 1) || (coms == 3 && users == 2)) { //else로 가능
 			System.out.println("당신이 졌습니다.");
 		}
 	}

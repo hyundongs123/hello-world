@@ -19,7 +19,7 @@ public class Test2 {
 	int math = sc.nextInt();
 
 	int sum = kor + eng + math ;
-	double avg = (sum)/3 ;
+	double avg = sum/3 ;
 
 	if ((kor >=40&& eng >=40 && math >=40) && avg >= 60) {
 		System.out.println("합격");
