@@ -3,174 +3,121 @@ package com.sh.oop.emp.model;
 import java.util.Scanner;
 
 public class Employee {
-
-	private int empNo;
-	private String empName;
-	private String dept;
-	private String job;
-	private int age;
-	private char gender;
-	private int salary;
-	private double bonusPoint;
-	private String phone;
-	private String address;
+	private int empNo;					//사번
+	private String empName;		//이름
+	private String dept;				//소속부서
+	private String job;					//직급
+	private int age;						//나이
+	private char gender;				//성별
+	private int salary;					//급여
+	private double bonusPoint;	//보너스포인트
+	private String phone;				//핸드폰
+	private String address;			//주소
 	
-	
-	public void empInput(String args) {
+	//키보드입력용메소드
+	public void empInput(){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("새사원정보를 입력하세요.");
-		System.out.println("사번,이름,소속부서,직급을 입력하세요.(예)5238 김현동 영업 대리");
-		empNo =sc.nextInt();
-		setempNo(empNo);
-		System.out.println("이름을 입력하세요");
+		//각필드는 private이므로 클래스내부에서 접근가능
+		System.out.print("사번 : ");
+		empNo = sc.nextInt();
+		System.out.print("이름 : ");
 		empName = sc.next();
-		setempName(empName);
-		System.out.println("소속부서를 입력하세요");
+		System.out.print("소속부서 : ");
 		dept = sc.next();
-		setDept(dept);
-		System.out.println("직급을 입력하세요");
+		System.out.print("직급 : ");
 		job = sc.next();
-		setJob(job);
-		System.out.println("나이,성별,급여,보너스포인트,핸드폰,주소를 입력하세요.");
+		System.out.print("나이 : ");
 		age = sc.nextInt();
-		setAge(age);
-		System.out.println("성별을 입력하세요");
-		gender = sc.next().charAt(gender);
-		setGender(gender);
-		System.out.println("연봉을 입력하세요");
-		salary =sc.nextInt();
-		setSalary(salary);
-		System.out.println("보너스포인트를 입력하세요");
-		bonusPoint =sc.nextDouble();
-		setBonusPoint(bonusPoint);
-		System.out.println("핸드폰 번호를 입력하세요.");
-		phone =sc.next();
-		setPhone(phone);
-		System.out.println("주소를 입력하세요.");
-		address = sc.next();
-		setAddress(address);
-	}
-	
-	//사원 삭제 메소드
-	public void ex () {
-		setempNo(0);
-		setempName(null);
-		setDept(null);
-		setJob(null);
-		setAge(0);
-		setGender(' ');
-		setSalary(0);
-		setBonusPoint(0);
-		setPhone(null);
-		setAddress(null);
+		System.out.print("성별 : ");
+		gender = sc.next().charAt(0);
+		System.out.print("급여 : ");
+		salary = sc.nextInt();
+		System.out.print("보너스포인트 : ");
+		bonusPoint = sc.nextDouble();
+		System.out.print("핸드폰 : ");
+		phone = sc.next();
+		sc.nextLine(); // 13 날리기용
+		System.out.print("주소 : ");
+		address = sc.nextLine();
 		
-		System.out.println("사원정보를 삭제하였습니다.");
 	}
-	public void  empOutput(){
-		
-	System.out.println("사번 :"+empNo);
-	System.out.println("이름 : "+empName);
-	System.out.println("소속부서 : "+dept);
-	System.out.println("직급 : "+job);
-	System.out.println("나이 : "+age);
-	System.out.println("성별 : "+gender);
-	System.out.println("급여 : "+salary);
-	System.out.println("보너스포인트 : "+bonusPoint);
-	System.out.println("핸드폰 : "+phone);
-	System.out.println("주소 : "+address);
 	
-	
-	
-	
-}
-	public void setempNo(int empNo) {
-		this.empNo= empNo;
+	//출력용메소드
+	public void empOutput(){
+		String str = "사번 : "+this.empNo;
+		str += "\n이름 : "+this.empName;
+		str += "\n소속부서 : "+this.dept;
+		str += "\n직급 : "+this.job;
+		str += "\n나이 : "+this.age;
+		str += "\n성별 : "+this.gender;
+		str += "\n급여 : "+this.salary;
+		str += "\n보너스포인트 : "+this.bonusPoint;
+		str += "\n핸드폰 : "+this.phone;
+		str += "\n주소 : "+this.address;
+		System.out.println(str);
 	}
-	public int getempNo() {
-		return this.empNo;
+	
+	//getter/setter 직접설정
+	public int getEmpNo() {
+		return empNo;
 	}
-	public void setempName(String empName) {
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
-	public String getempName() {
-		return this.empName;
+	public String getDept() {
+		return dept;
 	}
-	public void setDept (String dept) {
+	public void setDept(String dept) {
 		this.dept = dept;
 	}
-	public String getDept() {
-		return this.dept;
+	public String getJob() {
+		return job;
 	}
 	public void setJob(String job) {
-		this.job =job;
+		this.job = job;
 	}
-	public String getJob() {
-		return this.job;
+	public int getAge() {
+		return age;
 	}
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public int getAge() {
-		return this.age;
+	public char getGender() {
+		return gender;
 	}
 	public void setGender(char gender) {
 		this.gender = gender;
 	}
-	public char getGender() {
-		return this.gender;
+	public int getSalary() {
+		return salary;
 	}
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	public int getSalary() {
-		return this.salary;
+	public double getBonusPoint() {
+		return bonusPoint;
 	}
-	public void setBonusPoint (double bonusPoint) {
+	public void setBonusPoint(double bonusPoint) {
 		this.bonusPoint = bonusPoint;
 	}
-	public double getBonusPoint() {
-		return this.bonusPoint;
+	public String getPhone() {
+		return phone;
 	}
-	public void setPhone (String phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getPhone () {
-		return this.phone;
+	public String getAddress() {
+		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getAddress () {
-		return this.address;
-	}
 	
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
