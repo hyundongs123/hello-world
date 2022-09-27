@@ -1,63 +1,16 @@
 package member.model.vo;
 
-public class Gold {
+public class Gold extends Member{
 
-	private String name;
-	private String grade;
-	private int point ;
-	
-	
-	public Gold (String name,String grade, int point) {
-		this.name = name;
-		this.grade =grade;
-		this.point = point;
+	public Gold() {}
+
+	public Gold(String name, String grade, int point) {
+
+		super(name, grade, point);
 	}
-	
-	
-	
-	public double getitPoint () {
-		
-		return point*0.05;
-		}
-		
-	
-	
-	public String getName() {
-		return name;
+	@Override
+	public double getEjapoint(){ 
+		return super.getPoint()*0.05;
 	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public String getGrade() {
-		return grade;
-	}
-
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-
-	public int getPoint() {
-		return point;
-	}
-
-
-	public void setPoint(int point) {
-		this.point = point;
-	}
-
-
-	public String goldInfo() {
-		
-		return name +"\t" +grade +"\t"+ point+"\t"+ getitPoint();
-	}
-	
-	
-	
 	
 }

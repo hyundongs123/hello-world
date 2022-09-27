@@ -2,67 +2,49 @@ package member.controller;
 
 import member.model.vo.Gold;
 import member.model.vo.Silver;
+import member.model.vo.VVip;
 import member.model.vo.Vip;
-import member.model.vo.Vvip;
 
 public class MemberManager {
-
+	Silver[] s= new Silver[10];
+	Gold[] g = new Gold[10];
+	Vip[] v = new Vip[10];
+	VVip[] vv = new VVip[10];
 	
-	private int sindex= 0;
-	private int gindex= 0;
-	private int vindex= 0;
-	private int vvindex= 0;
-	Silver [] silvers ;
-	Gold [] golds;
-	Vip [] vips;
-	Vvip [] vvips;
+	int silverIndex = 0;
+	int goldIndex = 0;
+	int vipIndex = 0;
+	int vvipIndex = 0;
 	
-	public MemberManager() {
-		silvers = new Silver [10] ;
-		golds = new Gold [10];
-		vips = new Vip [10];
-		vvips = new Vvip[10];
-	}
 	
 	public void silverInsert(Silver s) {
-		silvers[sindex++] =s;
+		this.s[silverIndex++] = s;
 	}
 	public void goldInsert(Gold g) {
-		golds[gindex++] = g;
+		this.g[goldIndex++] = g;
 	}
-	public void vipInsert(Vip v) {
-		vips[vindex++] = v;
+	public void vipInsert(Vip v){
+		this.v[vipIndex++] =  v;
 	}
-	public void vvipInsert(Vvip vv) {
-		vvips[vvindex++] = vv;
-	}
-	
-	
-	public void printDate(){
-		
-		System.out.println("-----------------<<회원정보>>--------------------");
-		System.out.println("이름\t등급\t포인트\t이자포인트");
-		System.out.println("----------------------------------------------");
-		for (int i = 0 ; i <sindex ; i++) {
-			System.out.println(silvers[i].silverInfo());
-			
-		}
-		for (int i = 0 ; i <gindex ; i++) {
-			System.out.println(golds[i].goldInfo());
-			
-		}
-		for (int i = 0 ; i <vindex ; i++) {
-			System.out.println(vips[i].vipInfo());
-			
-		}
-		for (int i = 0 ; i <vvindex ; i++) {
-			System.out.println(vvips[i].vvipInfo());
-			
-		}
+	public void vvipInsert(VVip vv){
+		this.vv[vvipIndex++] =  vv;
 	}
 	
-	
-	
-	
-	
+	public void printData() {
+		System.out.println("----------------------------------------<<회원정보>>-----------------------------------------");
+		System.out.printf("%-15s %-15s %-15s %-15s\n", "이름","등급","포인트","이자포인트");
+		System.out.println("------------------------------------------------------------------------------------------------");
+		for(int i=0; i<silverIndex;i++) {
+			System.out.printf("%-15s %-15s %-15d %-15.2f\n", s[i].getName(), s[i].getGrade(), s[i].getPoint(), s[i].getEjapoint());			
+		}
+		for(int i=0; i<goldIndex;i++) {
+			System.out.printf("%-15s %-15s %-15d %-15.2f\n", g[i].getName(), g[i].getGrade(), g[i].getPoint(), g[i].getEjapoint());
+		}
+		for(int i=0; i<vipIndex; i++){
+			System.out.printf("%-15s %-15s %-15d %-15.2f\n", v[i].getName(), v[i].getGrade(), v[i].getPoint(), v[i].getEjapoint());
+		}
+		for(int i=0; i<vvipIndex; i++){
+			System.out.printf("%-15s %-15s %-15d %-15.2f\n", vv[i].getName(), vv[i].getGrade(), vv[i].getPoint(), vv[i].getEjapoint());
+		}
+	}
 }
