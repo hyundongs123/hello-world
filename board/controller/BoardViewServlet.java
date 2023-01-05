@@ -1,0 +1,83 @@
+package com.sh.mvc.board.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.sh.mvc.board.model.dto.Board;
+import com.sh.mvc.board.model.dto.BoardComment;
+import com.sh.mvc.board.model.service.BoardService;
+import com.sh.mvc.common.HelloMvcUtils;
+
+/**
+ * Servlet implementation class BoardViewServlet
+ */
+@WebServlet("/board/boardView")
+public class BoardViewServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       BoardService boardService = new BoardService();
+   
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int no = Integer.parseInt(request.getParameter("no"));
+		System.out.println(no);
+		//board 쿠키 처리 board= "[84][22]"
+		String boardCookieVal = "";
+		boolean hasRead = false;
+		
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			for (Cookie cookie : cookies) {
+				String name = cookie.getName();  //쿠키 키
+				String value = cookie.getValue();
+				
+				if("board".equals(name)) {
+					boardCookieVal = value;
+					if(value.contains("["+no+"]")) {
+						hasRead = true;
+					}
+				}
+			}
+		}
+		//응답쿠키
+		if(!hasRead) {
+			Cookie cookie = new Cookie("board",boardCookieVal+"["+no+"]");
+			cookie.setMaxAge(365*24*60*60); //1년동안 쿠키를 유지
+			cookie.setPath(request.getContextPath()+"/board/boardView");
+			response.addCookie(cookie);
+		}
+		
+		//2.업무로직 게시판 첨부파일테이블 조회
+		Board board = boardService.selectOneBoard(no,hasRead);
+		
+		
+		// 개행문자 변환처리
+		board.setContent(
+				HelloMvcUtils.convertLineFeedToBr(HelloMvcUtils.escapeHtml(board.getContent()))
+				);
+		//댓글목록 조회
+		
+		List<BoardComment> comments = boardService.selectBoardCommentList(no);
+		System.out.println("comments  코멘츠확인 = "+ comments );
+		
+		
+		
+		
+		request.setAttribute("board", board);
+		request.setAttribute("comments", comments);
+		 request.getRequestDispatcher("/WEB-INF/views/board/boardView.jsp").forward(request, response);
+    }
+	
+
+
+}
