@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM접근하기</title>
+</head>
+<body>
+    <h1>DOM접근하기</h1>
+    <!-- 
+        DOM document Object Model
+        -작성한 html태그를 계층구조에 맞추어 모델링한 결과
+        -document
+    
+    -->
+    <button onclick="test1();">getElementById</button>
+    <div id="area1">abcdef</div>
+
+    <script>
+        /**
+         * document.getElementById
+         * 1개의태그객체 또는 null이 반환
+         * null은 값없음을 의미하는 object타입
+         */
+        function test1(){
+            const div= document.getElementById("area1");
+            console.log(div);
+            console.dir(div); //객체를 계층적 구조로확인
+            console.log(div.innerHTML);
+            div.innerHTML ='가나다라바사';
+            console.log(typeof div,div);
+
+            const xxx = document.getElementById('xxx');
+            console.log(typeof xxx,xxx);
+        }
+    </script>
+
+    <ul id="web-client">
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>Javascript2015</li>
+    </ul>
+    <button onclick="test2();">getElemenstByTagName</button>
+    <script>
+        /**
+         * getElementsByTagName
+         * - 해당태그객체요소를 가진 배열이 반환
+         * 
+         */ 
+        function test2(){
+            const list = document.getElementsByTagName('li');
+            console.log(list);
+            let blue = 50;
+            for (let i = 0 ; i < list.length; i++){
+                const li = list[i];
+                console.log( i, li ,li.innerHTML);
+                li.innerHTML = "ABC"+ i;
+                li.style.backgroundColor = 'rgb(130,220,'+blue+')';
+                blue += 50;
+            }
+        }
+    </script>
+
+    <form action="">
+        <fieldset>
+            <legend>username</legend>
+            <input type="text" name="username">
+            
+        </fieldset>
+        <fieldset>
+            <legend>취미</legend>
+            <input type="checkbox" name="hobby" id="hobby1" value="축구">
+            <label for="hobby1">축구</label>
+            <input type="checkbox" name="hobby" id="hobby2" value="농구">
+            <label for="hobby2">농구</label>
+            <input type="checkbox" name="hobby" id="hobby3" value="야구">
+            <label for="hobby3">야구</label>
+        </fieldset>
+
+    </form>
+    <button onclick="test3();">getElementsByName</button>
+    <script>
+        /**
+         * getElementsByName
+         * -해당 name속성값을 가진 태그를 요소로하는 배열 반환
+         */ 
+        function test3(){
+            // const username = document.getElementsByName("username");
+            // console.log(username);
+            // console.log(username.value);
+            // username.values ='sinsa';
+            const hobbies = document.getElementsByName("hobby");
+            console.log(hobbies);
+            let checkedVal ="";
+
+            for(let i = 0 ; i < hobbies.length;i++){
+                const hobby = hobbies[i];
+                console.log(hobby.value,hobby.checked)
+                
+                if(hobby.checked){
+                    checkedVal += hobby.value + " ";
+                }
+            }
+            alert(checkedVal);
+        }
+
+    </script>
+
+    <div>
+        <p class="grp">자료구조</p>
+        <p>알고리즘</p>
+        <p class="grp">자바</p>
+        <p>스프링</p>
+        <p class="grp">시스템디자인</p>
+    </div>
+    <button onclick="test4();">getElementsByClassName</button>
+
+    <script>
+        /*
+        getElementsByClassName
+         - 해당클래스를 가진 태그요소 배열을 반환
+        */
+        
+        function test4(){
+            const grp = document.getElementsByClassName("grp");
+            console.log(grp);
+            
+            for (let i = 0 ; i < grp.length; i++){
+                grp[i].style.backgroundColor='blue';
+                grp[i].style.color = 'red';
+            }
+        }
+    </script>
+    <!--  oninput = 값넣기 -->
+    <form action="">
+        <fieldset>
+            <legend>range</legend>
+            <input type="range" name="score" id="score" min="0" max="100"  oninput=" document.getElementById('socreIndicator').innerHTML=this.value">
+            <span id="socreIndicator"></span>
+        </fieldset>
+    </form>
+
+        <div id="wrap";>
+            <p class="cls1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum quae nam sunt rerum nobis vero totam laboriosam voluptatem ut perferendis voluptatibus cumque consequatur quod quam quidem, omnis placeat aut blanditiis.</p>
+            <p class="cls2" id="p2">Dicta optio ducimus sed molestias laudantium est vero magni nulla eos, quasi, eveniet odio aut labore itaque quae, laborum voluptatibus repellat earum quis. Numquam aspernatur tenetur obcaecati voluptate ex quidem!</p>
+            <p class="cls1 cls2">Temporibus culpa eum magnam ratione omnis ut sint architecto eveniet animi quae fugit perferendis placeat, odit veniam. Enim voluptatibus eaque libero tenetur nobis, deserunt veniam, impedit veritatis suscipit mollitia inventore?</p>
+        </div>
+
+        <button onclick="test5(); ">querySelector</button>
+        <button onclick="test6(); ">querySelectorAll</button>
+
+
+        <script>
+        /**
+         * querySelector
+         * -css선택자를 통해 일치하는 첫번째요소 반환
+         * -
+        */ 
+        function test5(){
+            // const p =document.querySelector('#p2');
+            const p =document.querySelector("#wrap p");
+            console.log(p);
+            p.style.color="hotpink";
+
+        }
+
+        /**
+         * querySelectorAll
+         * -css선택자를 통해 일치하는 모든 요소를 배열에 반환
+         */
+        function test6(){
+            // const p = document.querySelectorAll("#wrap p");
+            const p = document.querySelectorAll("#wrap p.cls2");
+            console.log(p);
+            for(let i = 0 ; i<p.length; i++){
+                p[i].style.color= "blue";
+            }
+        }
+        </script>
+
+
+</body>
+</html>

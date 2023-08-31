@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>함수</title>
+</head>
+<body>
+
+    <h1>함수</h1>
+    <h2>함수선언 | 함수표현</h2>
+    
+    <script>
+/**
+ * 함수선언 fucntion Declaration
+ *  -function 키워드,함수명
+ */
+
+        function test1(){
+            console.log('test1');
+        }
+
+        /**
+         * 함수표현 Function Expresstion
+         * -변수에 익명함수를 대입하는 방식
+         */
+        const test2 = function (){console.log('test2');};
+
+        /**
+         * 화살표함수 Arrow Function
+         * -익명함수를 간단히 작성하는 방법
+         * ES6(ES2015)에 추가
+         */
+         const test3=()=>{
+            console.log('test3')
+         };
+
+         /**
+          * 즉시 실행 함수 iife Immediately Invoked Funtion Expresstion
+          * -선언과 호출 (동시)
+          * -변수를 캡슐화처리 유용
+          */
+
+          (function (){
+            console.log('life');
+          }());
+
+          (function (name){
+            console.log(`HI,${name}`);
+            const k = 999;
+            console.log(k)
+          }('철수'));
+
+    </script>
+
+    <h2>매개인자 / 매개변수 /리턴값</h2>
+    <button onclick="test4()">----실행</button>
+    <button onclick="test5()">----나머지파라미터</button>
+    <button onclick="test6()">----매개변수 기본값</button>
+    <button onclick="console.log(test7())">----리턴값</button>
+    <script>
+        
+        /**
+         * 모든 함수에는 리턴값이 있다.
+         * -명시적으로 return구문을 작성하지 않았다면, 맨 마지막에 return undefined 구문이 생략되 어 있는것
+         */
+        const test7 = function(){
+            console.log('test7');
+
+        };
+
+
+
+        /**
+         * 매개변수 기본값
+         */
+const test6 = function(name){
+    greeting('홍길동',3);
+    greeting('신사임당');
+    greeting(); //손 2  
+}
+    const greeting= function(name ='손',num= 2){
+        console.log(`${name}님.어서오십시오 ${num}분이시죠?` );
+    }
+
+    const test5 = function(){
+        evalReview('버거킹',5,4,3,2);
+        evalReview('맘스터치',5,4,3,2);
+        evalReview('쉑쉑버거',5,3,5,6,7,8,40);
+        
+    }
+    /**
+     * 나머지 파라미터 REst Parameter
+     * -매개변수부 마지막에 딱 한번 사용이 가능
+     */
+    const evalReview = function(name, ...reviews){
+        //arguments
+        // const name = arguments[0];
+        // let sum = 0;
+        // for(let i = 1 ; i <arguments.length;i++){
+        //     sum += arguments[i];
+        // }
+        // console.log(name,Math.floor(sum/(arguments.length-1)));
+   
+            console.log(name,reviews);
+            const sum = reviews.reduce(function (agg,n){
+                console.log(agg,n)
+                return agg+n;
+            })
+             console.log(name,Math.floor(sum/(arguments.length-1)));
+   
+    };
+
+
+
+
+        /**
+         * 매개인자/매개변수에 대해 엄격하지 않다.
+         */
+    const test4 = function (){
+        add();
+        add(1,2);
+        add(1,2,3,4);
+    };
+
+    /**
+     * arguments - 함수호출시에 전달한 모든 매개인수를 가진 유사배열객체
+     * -일반함수에서만 사용가능 (화살표함수에는 없음.)
+     */
+    const add =function(a,b,c){
+
+        console.log('add',a,b,c);
+        console.log(arguments);
+        let sum = 0;
+        for (let i in arguments)
+        sum+= arguments[i];
+
+        console.log('sum=',sum);
+    }
+
+    </script>
+
+    <button onclick="test8()">시이이일습문제에에에에에에 계산기</button>
+    <script>
+        const test8 =function(){
+            console.log(calc('합',10,20));                     //30
+            console.log(calc('합',1,2,3,4,5,6,7,8,9,10));      //55
+            console.log(calc('차',100,70))                    //30
+            console.log(calc('곱',11,2,5));                  //110
+            console.log(calc('곱',9,5));                     //45
+            console.log(calc('나누기',100,20));               5
+        }
+
+
+      const  calc = function (cal ,...num) {
+    
+
+        return num.reduce(function(agg,n){
+            switch(cal){
+            case '합' :return agg+n;
+            case '차' :return agg-n;
+            case '곱' :return agg*n;
+            case '나누기' :return agg/n;
+        }
+        });
+      };
+    </script>
+
+    <h2>화살표함수</h2>
+    <button onclick="test9()">실행</button>
+    <button onclick="(() => console.log(this))();">이벤트속성안 화살표함수의 this</button>
+    <script>
+        /**
+         * 화살표함수 = 익명함수에 대한 간단문법
+         * -완전대체불가
+         * -arguments 참조변수 사용불가
+         * -생성자함수로 사용불가
+           -this에 대한처리 : 자신의 this가 부모스코프의 thisf를 가져다 binding 
+         */
+         const test9 = function(){
+            f1(10);
+            console.log(f2(5,4));
+            f3('ㅋㅋㅋ');
+
+            //this용법2 일반함수에서 this는 window전역객체를 가리킨다.
+            console.log(this)//window
+            console.log(this===window)// true
+            
+            f4();
+         };
+         /**
+          * 매개변수가 1개일경우 , 소괄호 생략 가능
+          */
+         const f1 = (n) => {
+            console.log(n);
+         }
+         /**
+          * 함수몸통부가 return 규문 한줄이라면 , {return } 생략 가능하다.
+          */
+         const f2 = (a,b) => a+b;
+         /**
+          * 실행구문이 한줄이라면 , {}생략가능
+          */
+         const f3 = str => console.log(str);
+         
+         console.log('전역 this ',this)
+
+         const f4 = () =>{
+            console.log(this);   //window
+            console.log(this===window); //true
+         }
+
+    </script>
+
+
+    <h2>함수고급</h2>
+
+    <button onclick="test10();">함수는 값이다.</button>
+    <button onclick="test11();">매개인자 함수</button>
+    <button onclick="test12();">리턴값 함수</button>
+    <button onclick="test13();">태그예제</button>
+    <div id="target"></div>
+    <script>
+
+    const test13 = () => {
+        // h3태그,p태그,button태그 작성
+        const data = ['기온이 뚝.. 금일 저녁 한파예상','여보세요.....잘지내지? ','클릭미']
+        const makeH3 = tagMaker('h3'); //<h3></h3>        
+        const makeP = tagMaker('p');        //<p><p>
+        const makeButton = tagMaker('button');  //<button></button>      
+
+        console.log(makeH3()); //'기온이 뚝.. 금일 저녁 한파예상'
+        console.log(makeP()); //'여보세요.....잘지내지? '
+        console.log(makeButton()); //'클릭미'
+        
+        console.log(makeH3(data[0]));
+        console.log(makeP(data[1]));
+        console.log(makeButton(data[2]));
+        
+        target.innerHTML = makeH3(data[0]);
+        target.innerHTML += makeP(data[1]);
+        target.innerHTML += makeButton(data[2]);
+        
+    }
+    const tagMaker = (tagName)=>{
+        return (data) => {
+            return `<${tagName}>${data}</${tagName}>`;
+        }
+    }
+
+    const test12 = () =>{
+        // const f = makeFunc();
+        // for (let i = 0 ; i <10 ; i++ ){
+        //     f(i);
+        // }
+        const hi = greetingMaker('안녕');
+        const bye = greetingMaker('잘가');
+        const friends = ['철수','영희','재훈','다히'];
+        friends.forEach((friends=> {
+            hi(friends); bye(friends);
+        }))
+        
+    }
+
+    const greetingMaker = (word) => { return (name) =>{ console.log(`${name}~ ${word} 밥은먹고다니니?~`);  
+        };
+    }
+
+
+    const makeFunc = () => {
+        return function (i){
+        console.log('zzzzzz',i);  
+        };
+    }
+
+
+    const test11 = () =>{
+        const f1 = () => console.log('f1');
+        exec(f1);
+        exec(()=>console.log('abcdef!!!'));
+    
+        calculator((a,b)=> a + b , 3,7);
+        calculator((a,b)=> a - b , 10,2);
+        calculator((a,b)=> a * b , 3,4);
+        calculator((a,b)=> a / b , 15,3);
+    }
+    
+    const calculator = (f ,a,b) =>{
+        console.log(f(a,b));
+
+
+
+    };
+    
+    const exec = (f) => {
+        f();
+    };
+
+    
+
+
+
+
+    /**
+     *  js는함수를 값을 사용한다.
+     * 
+     */        
+        const test10= () => {
+            const f = a => a+10;
+            console.log(f(10));
+            const x = f;
+            console.log(x(30));
+            
+            const y = f ;
+            console.log(y(40));
+
+
+            const arr = [
+                ()=> console.log('000000000'),
+                ()=> console.log('111111111'),
+                ()=> console.log('2222222')
+
+            ] ;
+            arr[0]();
+            arr[1]();
+            arr[2]();
+            
+            arr.forEach((elem,index,arr) => {
+                // console.log(elem.index,arr)
+                elem();
+            });
+
+        }
+
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>

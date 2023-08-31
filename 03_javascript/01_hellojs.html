@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello JS</title>
+    <script>
+        //javascript 영역 
+        // 한줄주석 
+        /*
+         *   여러줄주석
+         */
+        console.log(1); //개발도구 -콘솔텝에 출력
+        
+        //script태그 베스트포지션
+        //1. head태그 안
+        //2. body종료태그 직전
+    
+        const a = 100;
+        function foo () {
+            console.log('fooooooooo');
+        }
+        //foo();
+        //bar();  main.js 실행전 bar함수 선언전 오류!
+    
+    </script>
+</head>
+<body>
+    <h1>Hello JS</h1>
+
+    <ul>
+        
+        <li>inline event속성(event속성값은 자바스크립트 영역이다.)
+            <button type="button" onclick="alert('Hello JS!'); alert(123); foo();bar(); ">실행</button>
+        </li>
+        <li>script태그</li>
+        <li>외부 script</li>
+    </ul>
+    <script src="js/main.js"></script>
+    <script>
+    console.log(2);
+    console.log(a);
+    bar();
+    </script>
+</body>
+</html>

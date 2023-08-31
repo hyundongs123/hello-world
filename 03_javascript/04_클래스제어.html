@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스제어</title>
+    <style>
+    table{ 
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 500px;
+        margin:  auto;
+    }
+    th,td{
+        border: 1px solid black;
+        text-align: center;
+    }
+    .on{
+        background-color: blueviolet;
+        color: white;
+    }
+    .gungseo{
+        font-family: '궁서';
+    }
+
+
+    </style>
+</head>
+<body>
+    <h1>클래스제어</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th colspan="3">
+                    <h2>수강신청</h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th colspan="3">
+                    <input type="checkbox" id="checkAll" onchange="fnCheckAll();">
+                    <label for="checkAll">전체선택</label>
+                </th>
+                
+            </tr>
+            <tr>
+                <td class="gungseo">
+                    <!-- this용법 1. inline속성의 this는 태그객체 자신을 가리킨다. -->
+                    <input type="checkbox" name="subject" id="subject0" value="국어" onchange="fnCheckEach(this);">
+                    <label for="subject0">국어</label>
+                </td>
+                <td class="gungseo"> 
+                    <input type="checkbox" name="subject" id="subject1" value="영어" onchange="fnCheckEach(this);">
+                    <label for="subject1">영어</label>
+                </td>
+                <td class ="gungseo">
+                    <input type="checkbox" name="subject" id="subject2" value="수학" onchange="fnCheckEach(this);">
+                    <label for="subject2">수학</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        /*
+        전체선택 또는 전체해제
+        */
+        function fnCheckAll(){
+            // const subjects = document.getElementsByName('subject');
+            const subjects = document.querySelectorAll("[name=subject]");
+            console.log(subjects)
+            const checkAll = document.getElementById("checkAll");
+
+            for(let i = 0 ; i < subjects.length ;i++){
+                const subject = subjects[i];
+                subject.checked = checkAll.checked;
+                handleTd(subject);
+            }
+        }
+        function handleTd(subject){
+            const td = subject.parentElement; //부모요소가져오기
+            console.log(td)
+            if(subject.checked){
+                // td.className = "gungseo on";             클래스네임 쓰지말고 list로 제어해라
+                td.classList.add('on');
+            }else
+                // td.className = "gungseo";
+                td.classList.remove('on');
+        }
+        /*
+        개별체크박스를 통한 전체선택 제어
+        */
+        function fnCheckEach(subject){
+            console.log('fnCheckEach',subject)
+            const subjects = document.querySelectorAll('[name=subject]');
+
+            //부모td 클래스 on 제어
+            handleTd(subject);
+
+            // --개수로처리
+            // let cnt = 0;
+            // for (let i = 0 ; i< subjects.length ; i++){
+            //     if(subjects[i].checked)
+            //     cnt++;
+            // }
+            // document.querySelector("#checkAll").checked = (cnt == subjects.length);
+            
+            for(let i = 0 ; i<subjects.length;i++){
+                if(!subjects[i].checked){
+                    document.querySelector("#checkAll").checked = false;
+                    return;
+                }
+            }
+            document.querySelector("#checkAll").checked = true;
+        
+        }
+
+
+    </script>
+
+
+</body>
+</html>

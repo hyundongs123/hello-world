@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체배열 | 생성자함수</title>
+</head>
+<body>
+    <h1>객체배열 | 생성자함수</h1>
+    <button onclick="test1();">실행</button>
+    <button onclick="test2();">생성자함수</button>
+    <button onclick="test3();">생성자함수 | 프로토타입</button>
+    <button onclick="test4();">생성자함수 속성 static</button>
+    <script>
+        /**
+         * = {} literal
+         * - new Object() 생성자
+         */
+        const test1 = () => {
+            const pets = [
+                {
+                    name : '구리구리',
+                    breed : '푸들',
+                    weight : 3.5,
+                    age : 10,
+                    color : ['white'],
+                    bark(){
+                        return this.weight < 10 ? '왈왈' : '멍멍';
+                    }
+                },
+                {
+                name : '둘리',
+                    breed : '말티즈',
+                    weight : 7,
+                    age : 3,
+                    color : ['white'],
+                    bark(){
+                        return this.weight < 10 ? '왈왈' : '멍멍';
+                    }
+                },
+                {
+
+                    name : '사랑이',
+                    breed : '코카스파니엘',
+                    weight : 13,
+                    age : 4,
+                    color : ['white', 'brown'],
+                    bark(){
+                        console.log(this);//구조분해할당하면 this가 wind를 가리킨다. Losiong this현상
+                        return this.weight < 10 ? '왈왈' : '멍멍';
+                    }
+                }
+            ];
+
+            pets.forEach((pet)=>{
+                // console.log(${pet.name}야~ ${pet.bark()}); 문제없음
+                // console.log(`${name}야~ ${bark()}`);
+
+                let {name,bark} =pet;
+                bark = bark.bind(pet);
+                console.log(`${name}야~ ${bark()}`)
+
+            });
+
+        };
+
+        /**
+         * Pet 생성자함수
+         * -관례적으로 생성자함수는 대문자로 시작
+         * -this용법4. 생성자함수의 this는 현재객체를 가리킨다.
+         * -중복된 코드는 prototype에 선언해서 자식객체에 물려줄수 있다.
+         * 
+         */
+        function Pet(name,breed,weight,age,...color){
+            this.name = name ;
+            this.breed =breed;
+            this.weight = weight;
+            this.age =age;
+            this.color = color;
+            // this.bark =function(){
+            //     return this.weight <10 ? '왈왈' :'멍멍';
+            // }
+        }
+        Pet.prototype.bark = function(){
+                return this.weight <10 ? '왈왈' :'멍멍';
+            };
+        /**
+         * 생성자 함수
+         * -new연산자로 호출하는 함수
+         * -호출결과 객체를 반환.
+         * 
+         */
+        const test2 = ()=>{
+            const pets = [];
+            pets.push(new Pet('구리구리','푸들',3.5,10,'white'));
+            pets.push(new Pet('둘리','말티즈',6.4,3,'white'));
+            pets.push(new Pet('사랑이','코카스파니엘',13,4,'white','brown'));
+
+            pets.forEach((pet)=>{
+                console.log(`${pet.name},${pet.breed},${pet.weight},${pet.age},${pet.color},${pet.bark()}`);
+            });
+            
+            
+
+        }
+        function Duck(firstName,lastName){
+            this.firstName=firstName;
+            this.lastName=lastName;
+
+        }
+        Duck.prototype.say = function (){
+            return '꽥꽥';
+        }
+
+        /**
+         * 생성자함수 (constructor)
+         * 원형객체 (prototype)
+         * 자식객체 (new연산자로 생성자함수를 호출한 결과)
+         * 
+         */
+        const test3 =()=>{
+            console.dir(Duck); //생성자함수
+            console.log(Duck.prototype); //프로토타입객체
+            const lee = new Duck('효리','이');
+            console.log(lee);
+            console.log(lee.__proto__);//프로토타입객체
+            console.log(lee.__proto__===Duck.prototype);//true
+
+            console.log(lee.toString());
+            console.log(lee.__proto__.__proto__); //object.prototype
+
+        };
+        function Foo(id){
+            this.id = id;
+            this.hello = function () {
+                console.log('hello');
+            }
+
+        }
+        Foo.prototype.id= '홍길동';
+        Foo.prototype.hello=function(){
+            console.log('안녕');
+        }
+        //Foo의 static속성
+        Foo.id='세종';
+        Foo.hello=function(){
+            console.log('가나다라마바사');
+        }
+
+        /**
+         * -생성자함수 속성 static
+         * -원형객체 속성
+         * -자식객체 속성
+         * 
+         */
+        const test4 = ()=>{
+         const foo = new Foo('sinsa');
+         console.log(foo.id); //sinsa
+         foo.hello();        //hello
+
+         console.log(foo.__proto__.id); //홍길동
+         foo.__proto__.hello(); //안녕
+         console.log(Foo.prototype.id); //홍길동
+         Foo.prototype.hello();  //안녕
+        
+        console.log(Foo.id); //세종
+        Foo.hello();        //가나다라마바사
+            console.dir(Foo);
+        }
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+</body>
+</html>

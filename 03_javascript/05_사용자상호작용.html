@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자상호작용</title>
+</head>
+<body>
+    <h1>사용자상호작용</h1>
+    <button onclick=" test1();">console</button>
+    <button onclick=" alert('하이잇~');">alert</button>
+    <button onclick=" test2();">confirm</button>
+    <button onclick=" test3();">prompt</button>
+    <h2 id="greeting"></h2>
+    <script>
+    /**
+     * prompt
+     * -사용자에게 한줄짜리 입력 처리
+     * -입력후 확인 - 입력값이 반환 (string)
+     * -취소 null값 반환
+     * 
+     */ 
+    function test3(){
+        const answer =prompt("당신의 별명은 무엇입니까","예삐삐삐"); //조건식자리에 string 
+        console.log(answer);
+        // 스트링 반환하면서 값이있으면  true
+        //조건식 boolean으로 평가 - 
+        //값이 있는 것 ("홍길동",1234,-7...) : true로 평가
+        //값이 없는 것 ("",0,null, undefined...): false로 평가
+
+        if(answer){
+            // document.querySelector("#greeting").innerHTML = answer +"님, 반갑습니다." +answer + "님은 오늘 뭐하세요" ;
+            document.querySelector("#greeting").innerHTML = `${answer} 님, 반갑습니다 ${answer}  님은 오늘 뭐하세요?  ${10*10} `;   //     `${}`
+
+        }else{
+            //"".null이 반환된경우
+            // alert("별명을 입력해주세요.");
+            alert(`별       명       을 
+            입렵하세요 . `)
+        }
+
+    }
+
+
+
+    /**
+     * -확인 true반환
+     * -취소 false반환
+     */ 
+    function test2(){
+        const bool = confirm("이파일을 정말 삭제하시겠습니까");
+        console.log(bool);
+
+        if(bool){
+            console.log('삭제시프로세스를 시작합니다....')
+        }else{
+            console.log('삭제를 취소합니다.')
+        }
+    }
+
+
+
+            /*
+            console            
+            */
+    function test1(){   
+        console.log('안녕~')
+        console.error('오류')
+        console.dir({x:12.34,y:56.78}); //객체 계층구조
+       
+        //실행시간
+        console.time('taskID-1234');
+        for(let i = 0 ; i<1_000_000;i++){
+
+        }
+        console.timeEnd('taskID-1234');
+    
+        //추적용
+        console.trace('test1');
+        
+
+
+
+
+    }
+    </script>
+
+    
+</body>
+</html>

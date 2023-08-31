@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배열</title>
+</head>
+<body>
+    <h1>배열</h1>
+    <button onclick="test1()">기본</button>
+    <script>
+    /**
+     *  배열
+     *  - object 타입
+     *  - 타입제한 /크기제한이 없다.
+     *  - 존재하지 않는 인덱스를 참조해도 오류나지 않음. undefined리턴
+     *  - 
+     *  - 
+     */
+    function test1(){
+        const arr1 = [1,2,3];
+        const arr2 = new Array('a','b','c');
+        const arr3 = new Array(5); //크기지정 
+        console.log(arr1);
+        console.log(arr2);
+        console.log(arr3);
+        
+        console.log(arr1[0],arr1[1],arr1[2],arr1[3]); // 1 2  3 undefined
+        arr1[3]|| (arr1[3] = 4);
+
+        console.log(arr1[100]);
+        // console.log(arr1[100].toString()) //undefined에 대해 속성 메소드참조 오류
+        
+        //4~100번지 까지 요소를 추가 (5~100 입력)
+        for(let i = 5 ; i  <100 ; i++){
+            arr1[i] =i ;
+        }
+        
+        //타입제한이 없다.
+        const arr4 = [1,2,3,'홍길','신사',[4,5,6]]
+        console.log(arr4)
+        console.log(arr4[5][1])
+
+    }
+    </script>
+
+
+    <h2>배열 메소드</h2>
+    <button onclick="test2();">indexOf</button>
+    <button onclick="test3();">join</button>
+    <button onclick="test4();">reverse</button>
+    <button onclick="test5();">sort</button>
+    <button onclick="test6();">push | pop | unshift | shift</button>
+    <button onclick="test7();">slice</button>
+    <button onclick="test8();">splice</button>
+    <button onclick="test9();">concat</button>
+    <script>
+    /**
+    * indexOf
+    */
+    function test2(){   
+        const arr = ['홍길동','신사임당','이순신','홍길동'];
+        console.log(arr.indexOf('신사임당'))  //1
+        console.log(arr.indexOf('유관순'))    //-1
+        console.log(arr.lastIndexOf('홍길동')) //3
+    }
+    /**
+    * join(구분자):array
+    * - 요소를 구분자로 합친 하나의 문자열로 반환
+    */
+    function test3(){
+        const arr = ['사과','토마토','바나나'];
+        console.log(arr.join()); // 사과,토마토,바나나 (기본구분자  ,)
+        console.log(typeof arr.join()) //배열 -> string
+    }
+    /**
+    * reverse():array
+    * -원본배열의 요소를 뒤집어 반환
+    */
+    function test4(){
+        const arr = [1,2,3,4,5];
+        console.log(arr.reverse());  // 5 4 3 2 1
+        console.log(arr);              // 5 4 3 2  1
+        
+
+    }
+    /**
+    * sort (compareFunction) : array
+    * =원본 배열의 순서를 변경 해서 반환
+    */
+    function test5(){
+        const arr = [3,2,4,1,5];
+        arr.sort();
+        console.log(arr); // 1 2 3  4 5
+        
+        const names = ['나영길','다락방','가방애'];
+        names.sort();
+        console.log(names)
+        
+        //기본정렬이 아닌 정렬
+        //비교함수는 정수값 (양수 , 0 ,음수) 를 반환하는 함수 
+        arr.sort(function(a,b){
+            return b- a;
+        })
+        console.log(arr);
+        
+        names.sort(function(a,b){
+            if(a>b) return -1;
+            if(a<b) return 1;
+            return 0;
+        });
+        console.log(names);
+
+    }
+    /**
+    * 
+    * push 맨마지막에 요소 추가
+    * pop 맨마지막 요소 제거 및 반환
+    * unshift 0번지에 요소 추가
+    * shift 0번지 요소 제거 및 반환
+    *                         
+    * 원본배열 직접 수정
+    */
+    function test6(){
+        const arr = ['a','b','c'];
+        console.log(arr.push('d'));
+        console.log(arr.pop())
+        console.log(arr.unshift('가'));
+        console.log(arr.shift('가'));
+
+        console.log(arr)
+        const subway =['교대','강남','역삼','선릉'];
+        
+        subway.push(subway.shift())
+        console.log(subway)
+        //queue first in first out
+
+        //맛집에 길동이 도착했다.
+        //맛집에 세종이 도착했다.
+        //맛집에 다음 손님이 입장했다.
+        //맛집에 강인이 도착했다.
+        //맛집에 다음 손님이 입장했다.
+        const jmt = [];
+        jmt.push('길동');
+        jmt.push('세종');
+        jmt.shift();
+        console.log(jmt)
+        jmt.push('강인');
+        jmt.shift();
+        console.log(jmt)
+
+        //stack last in first out
+        //김치를 사러가기
+        //차에 기름넣기
+        //차키찾기
+
+        const todo = [];
+        todo.push('김치구매');
+        todo.push('차에기름넣기');
+        todo.push('차키찾기');
+        while(todo.length){
+            console.log(todo.pop());
+        }
+
+
+
+    }
+    /**
+    * slice(startinclusive,endexclusive)
+    * - 배열의 substring 
+    * - startInclusive ~ (endExclusive -1 ) 요소를 가져와서 새 배열에 반환
+    * - 원본배열은 변경하지 않는다.
+    * 
+    * 
+    */
+    function test7(){
+        const langs = ['java','sql','html','css','javascript','python'];
+        const clinetLangs = langs.slice(2,5);
+        console.log(langs.slice(2));
+        console.log(clinetLangs);
+        console.log(langs);
+
+        //배열복사
+        const langsCopy = langs.slice();
+        console.log(langsCopy)
+
+    }
+    /**    배열에 요소 끼어넣기!!!!!!!★★★★★★★★★★★★★★★★★★★★★★★★★★
+    * splice(startInclusive,delCount,[newItem1,newItem2,newItem3])
+    * -startInclusive 에서 시작
+    * -delCount 삭제할 요소수
+    * -newitem1,newitem2 start에 끼어넣을 요소
+    * -원본배열 직접수정
+    * -제거된 요소를 반환
+    * 
+    */
+    function test8(){
+        const arr = ['a','b','c'];
+        console.log(arr.splice(1,1,10,20,30)); //['b']  제거된거 반환
+        console.log(arr);                      //[a,10,20,30,c] 직접 배열 수정
+        arr.splice(1,0,'가,','나');
+        console.log(arr);
+    }
+
+    /**
+     * concat(arr):array
+     * - 새배열을 반환
+     */
+    function test9(){
+        const arr1 = [1,2,3];
+        const arr2 = ['a','b','c'];
+        const arr3 = arr1.concat(arr2);
+        console.log(arr1);
+        console.log(arr2);
+        console.log(arr3);
+    }
+
+
+
+    </script>
+    <fieldset>
+        <legend>@실습문제 무지개</legend>
+        <button onclick="rainbow()">실행</button>
+    </fieldset>
+    <script>
+        // subway.push(subway.shift())
+        function rainbow(){
+        let rain = ['빨','주','노','초','파','남','보'];
+        
+        for(let i = 0 ; i < rain.length ;i++){
+        console.log(rain);            
+        rain.push(rain.shift());
+        }
+        
+        }
+    </script>
+        
+
+
+
+
+    <fieldset>
+        <legend>@실습문제 - 영화</legend>
+        <button onclick="movie1()">영화입력</button>
+        <button onclick="movie2()">오름차순정렬</button>
+        <button onclick="movie3()">내림차순정렬</button>
+        <ul id="movies"></ul>
+    </fieldset>
+    <script>
+        let movieList;
+    
+        function renderMovieList(){
+            const container = document.querySelector("#movies");
+            container.innerHTML = ""; 
+            for(let i = 0; i < movieList.length; i++){
+                container.innerHTML += `<li>${movieList[i]}</li>`;
+            }
+        }
+        /**
+         * 사용자로부터 선호영화를 n개 입력(prompt)받아서 #movies에 li태그로 추가
+         * - 본 아이덴티티, 동물원, 카모메식당 -> ['본 아이덴티티', '동물원', '카모메식당'] -> <li></li>
+         */
+        function movie1(){
+            const movieStr = prompt('선호하는 영화를 입력하세요...','아이덴티티, 동물원, 카모메식당');
+            if(movieStr){
+                movieList = movieStr.split(', ');
+                renderMovieList();
+            }
+        }
+        /**
+         * 입력받은 영화목록을 오름차순 정렬 #movies에 출력
+         */
+        function movie2(){
+            movieList.sort();
+            const container = document.querySelector("#movies");
+            renderMovieList();
+        }
+        /**
+         * 입력받은 영화목록을 내림차순 정렬 #movies에 출력
+         */
+        function movie3(){
+            movieList.sort(function(a, b){
+                if(a < b) return 1;
+                if(a > b) return -1;
+                return 0;
+            });
+            renderMovieList();
+        }
+        </script>
+
+        <h2>유사배열</h2>
+        <button onclick="test10()">실행</button>
+        
+        <script>
+        /*
+        유사배열
+        - 모양만 배열 (인덱스 ,length가지고있음),이고, 배열 api 는 사용불가
+        - Array.prototype 을 상속하지 않음.
+        - DOM 관련 복수개의 요소를 반환하는 메소드 : getelementsBYXXX querySElectorAll
+
+        */
+        function test10(){
+            console.log([1.2,3])
+            const buttons=document.getElementsByTagName('button');
+            console.log(buttons);
+            // console.log(buttons.pop());
+            
+            //배열화
+            // const realbuttons = Array.from(buttons);
+            const realbuttons = [...buttons]; //es6에 추가된 전개연산자
+            console.log(realbuttons);
+            console.log(realbuttons.pop());
+
+        }
+        </script>
+
+        <h2>반복처리</h2>
+        <button onclick="test11();">forEach</button>
+        <button onclick="test12();">map</button>
+        <button onclick="test13();">filter</button>
+        <button onclick="test14();">reduce</button>
+        <button onclick="test15();">@실습문제 - drink</button>
+        <div id="target">
+            <ul></ul>
+        </div>
+        <div>
+            <ul id="drink">
+                <li>coffee</li>
+                <li>cocktail</li>
+                <li>juice</li>
+                <li>beer</li>
+                <li>whiskey</li>
+            </ul>
+        </div>
+
+        <script>
+            /**
+             * @실습문제 
+             * -drink 하위의 음료목록을 읽어와서 대문자로 변환하고,오름차순 정렬후 다시 #dirnk하위에 li태그로 추가
+             */
+            function test15(){
+            //배열
+            const list = Array.from(document.querySelectorAll("ul#drink li")); // [..유사배열]
+            console.log(list);
+            // 텍스트추출 & 대문자변환
+            
+            const drinks = list.map(function(li){
+                return li.innerText.toUpperCase();
+            });
+            // 오름차순 정렬
+            drinks.sort();
+            console.log(drinks);
+            // li태그처리
+            const wrapper = document.querySelector("ul#drink");
+            wrapper.innerHTML = "";
+            drinks.forEach(function(drink){
+                wrapper.innerHTML += `<li>${drink}</li>`;
+            });
+            
+        }
+// text[i].toUpperCase()           Array.from(buttons) li.innerHTML
+
+        </script>
+
+
+
+        <script>
+        /**
+         * forEach
+         * for ..in문
+         * for..of문
+         * for문
+         */
+        function test11(){
+        const arr =['가','나','다'];
+        
+            //for문
+            for(let i= 0 ; i <arr.length ; i++){
+                console.log(arr[i]);
+            }
+            //for..in문 : 배열에 대해서 인덱스속성을 가져오기 (열거속성이 true인 속성만)
+            for(let i in arr){
+                console.log(i,arr[i]);
+            }
+
+            //for..of문 : 배열요소가져오기
+            for(let ch of arr){
+                console.log(ch);
+            }
+            //forEach문                    는함수다 ... 배열의메소드이다..
+            //각 요소별로 전달한 함수 (콜백함수)를 실행
+            arr.forEach(function(elem,index,arr){
+                console.log(elem,index,arr);
+            });
+        }
+    /**
+     map 
+     -배열의 각요소별 작업후 새 요소를 담은 배열 반환
+
+    */
+
+    function test12(){
+        const arr= [1,2,3]
+        const arr2= arr.map(function(elem,index,arr){
+        console.log(elem,index,arr)
+        return elem*elem
+        })
+        console.log(arr2)
+        const names =['홍길동,','신사임당','세종대왕']; // -> ['<li>홍길동</li>','<li>신사</li>','<li>세종대왕</li>']
+        const nameList = names.map(function(name){
+        return `<li>${name}</li>`;
+        } );
+
+        nameList.forEach(function(li){
+            document.querySelector("#target ul").innerHTML +=li;
+        })
+    }
+    /**
+     * fileter
+     * - 각요소별로 콜백함수를 실행해서 true 인 요소만 새 배열에 담아 반환
+     */
+    function test13(){
+        const nums = [1,2,3,4,5,6,7,8,9,10];
+        const evens = nums.filter(function (n,index,arr){
+            console.log(n,index,arr);
+            return n%2==0;
+        });
+        console.log(evens)
+        //1~100 정수를 담은배열을 만들고,31이하의  3의 배수만 추려내는 필터 filter함수 사용하기
+    
+        const numb =[];
+        for(let i = 0 ; i < 100;i++){
+            numb.push(i+1);
+        }
+        const tripple = numb.filter(function(n){
+            if(n<=31){
+                return n%3==0;
+            }
+        } )
+        console.log(tripple)
+     
+
+    }
+       /**
+         * reduce
+         * - 모든요소를 대상으로 특정작업후 하나의 값 으로 반환
+         * - 최대/최소값, 누적합 등의 작업에 적합
+         * - reduce(콜백함수,초기값) : 초기값을 생략하면 배열의 첫번째요소가 초기값이 된다.
+         */
+         function test14(){
+            const arr = [1,2,3,4,5,6,7,8,9,10];
+            const sum = arr.reduce(function(agg,elem,index,arr){
+                console.log(agg,elem,index,arr);
+                return agg+elem;
+            } ,0);
+            console.log(sum);
+            
+            const max = arr.reduce(function (max,elem){
+                return elem > max ? elem : max;
+            })
+            console
+
+            //map처럼 사용하기
+            
+            const arr2 = arr.reduce(function(arr,elem){
+                console.log(arr,elem)
+                arr.push(elem*elem)
+                return arr;
+            },[])
+            console.log(arr2);
+
+        }
+
+</script>
+
+</body>
+</html>

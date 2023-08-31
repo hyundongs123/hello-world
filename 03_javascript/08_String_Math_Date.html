@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String</title>
+</head>
+<body>
+    <h1>String</h1>
+    <!-- 
+        String.prototype객체로 부터 물려받은 메소드 사용가능.
+    -->
+    <button onclick="test1();">String API</button>
+    <button onclick="test2();">@실습문제</button>
+
+    <script>
+    /**
+     * @실습문제
+     * - 사용자로부터 입력값을 받고(prompt), 해당문자열에서 알파벳의 개수를 세어 출력
+     * - 입력하신 문자열에서 알파벳은 5개입니다. (안녕하세요. James입니다.)
+     * 
+     * - 'a' == 97
+     */
+    function test2(){
+        const text = prompt("아무 글자나 입력하세요.", "안녕하세요. James입니다.").toLowerCase();
+        let cnt = 0;
+        if(text){
+            for(let i = 0; i < text.length; i++){
+                // if(text[i] >= 'a' && text[i] <= 'z')
+                if(text[i].toLowerCase() != text[i].toUpperCase())
+                    cnt++;
+            }        
+            console.log(`입력하신 문자열에서 알파벳은 ${cnt}개입니다.`);
+        }
+    }
+
+    function test1(){
+        const str = "Apple Samsung PineApple";
+
+        console.log(str.toUpperCase()); // APPLE SAMSUNG PINEAPPLE
+        console.log(str.toLowerCase()); // apple samsung pineapple
+
+        console.log(str.indexOf("Sam")); // 6
+        console.log(str.indexOf("XXX")); // -1
+        console.log(str.lastIndexOf("Apple")); // 18
+
+        console.log(str.charAt(6));
+        for(let i = 0; i < str.length; i++)
+            console.log(str.charAt(i), str[i]);
+
+        // substring(startInclusive, endExclusive)
+        // substr(startInclusive, length)
+        console.log(str.substring(6, 13)); // Samsung
+        console.log(str.substr(6, 7));  // Samsung
+
+        console.log(str.substring(6)); // Samsung PineApple
+        console.log(str.substr(6)); // Samsung PineApple
+
+        // 대문자 P를 찾고, 이후 글자 4개 대문자로 반환
+        console.log(str.substr(str.indexOf('P'), 4).toUpperCase());
+
+        const idx = str.indexOf('P');
+        console.log(str.substring(idx, idx + 4).toUpperCase());
+
+        console.log(str.replace("Apple", "Tomato")); // Tomato Samsung PineApple
+        console.log(str.replaceAll("Apple", "Tomato")); // 최신스펙 Tomato Samsung PineTomato
+
+        // 모든 Apple을 Tomato로 변경
+        let result = str;
+        while(result.indexOf("Apple") > -1) {
+            result = result.replace("Apple", "Tomato");
+        }
+        console.log(result); // Tomato Samsung PineTomato
+
+        console.log(str.replace(/Apple/g, "Tomato")); // Tomato Samsung PineTomato
+
+        // console.log(str); // Apple Samsung PineApple
+
+        console.log(str.split(" ")); // ['Apple', 'Samsung', 'PineApple']
+    }
+    </script>
+
+    <h1>Math</h1>
+    <button onclick="test3();">실행</button>
+    <button onclick="test4();">@실습문제</button>
+    <div id="ex">
+        <ol></ol>
+    </div>
+    <script>
+    /**
+     * @실습문제
+     * - #ex ul 하위에 li태그 100개 생성후 1~100사이의 난수 생성
+     * - 생성된 난수가 짝수인 경우, 핑크색을 적용.
+     * - 버튼을 누를때마다 새로 초기화되어야 합니다.
+     */
+    function test4(){
+
+        const wrapper = document.querySelector("#ex ol");
+        wrapper.innerHTML = "";
+
+        for(let i = 0; i < 100; i++){
+            const n = Math.floor(Math.random() * 100 + 1);
+            if(n % 2 == 0) {
+                wrapper.innerHTML += `<li style='color: hotpink;'>${n}</li>`;
+            }
+            else {
+                wrapper.innerHTML += `<li>${n}</li>`; 
+            }
+
+            // wrapper.innerHTML += `<li>${n}</li>`;
+            // if(n % 2 == 0)
+            //     wrapper.querySelector("li:last-child").style.color = "hotpink";
+        }
+    }
+
+    function test3(){
+        const m = -123;
+        const n = 123.456;
+
+        console.log(Math.abs(m));
+        console.log(Math.floor(n)); // 123
+        console.log(Math.floor(n * 10) / 10); // 123.4
+        console.log(Math.ceil(n)); // 124
+        console.log(Math.round(n * 100) / 100); // 123.46
+
+        console.log(Math.random()); // 0.0이상~ 1.0미만
+        console.log(Math.floor(Math.random() * 10 + 1));
+    }
+    </script>
+
+    <h1>Date</h1>
+    <button onclick="test5();">현재날짜시각</button>
+    <button onclick="test7();">특정날짜시각</button>
+    <button onclick="test8();">@실습문제</button>
+    <form action="javascript:test8();">
+        <input type="date" name="dday" id="dday" value="2022-11-29">
+        <input type="submit" value="확인">
+    </form>
+    <h2 id="clock"></h2>
+    <script>
+    /**
+     * @실습문제 - dday구하기
+     */
+    function test8(){
+        const ddayVal = dday.value;
+        console.log(ddayVal);
+        const date = new Date(`${ddayVal}T00:00:00`); //-------------------------------------------------★★★★★★★★★★★
+        console.log(date);
+        const diff = (date - new Date()) / 1000 / 60 / 60 / 24;
+        console.log(diff);
+        
+        if(diff > 0) {
+            // d-n
+            alert(`오늘은 D-${Math.ceil(diff)} 입니다.`);
+        }
+        else if (diff > -1 && diff <= 0){
+            alert(`오늘은 D-Day 입니다.`);
+        }
+        else {
+            alert(`오늘은 D+${Math.abs(Math.ceil(diff))} 입니다.`);
+        }
+
+
+
+    }
+    /**
+     * new Date(1999, 8, 9)
+     * new Date(1999, 8, 9, 9, 9, 9)
+     * new Date("1999-09-09")
+     * new Date("1999-09-09T09:09:09")
+     */
+    function test7(){
+        const d1 = new Date(1999, 8, 9);
+        const d2 = new Date(1999, 8, 9, 9, 9, 9);
+        const d3 = new Date("1999-09-09"); // iso8601 utc
+        const d4 = new Date("1999-09-09T09:09:09"); 
+        console.log(d1);
+        console.log(d2);
+        console.log(d3);
+        console.log(d4);
+
+        // 날짜차이 구하기 
+        const start = new Date(2022, 8, 1); // 2022-09-01
+        const now = new Date();
+        console.log(now - start); // date - date = number (milli차이)
+        console.log(now.getTime() - start.getTime());
+
+        const diff = (now - start) / 1000 / 60 / 60 / 24; // 밀리초 -> 초 -> 분 -> 시간 -> 일
+        console.log(`개강한지 ${Math.floor(diff)}일입니다.`);
+    }
+
+
+
+    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+    /**
+     * #clock 현재날짜 시각정보를 출력
+     * - 2022년 11월 28일(월) 12:50:12
+     */
+    function test6(){
+        const d = new Date();
+        const clockVal = `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일(${daysOfWeek[d.getDay()]}) 
+                          ${f(d.getHours())}:${f(d.getMinutes())}:${f(d.getSeconds())}`;
+        clock.innerHTML = clockVal;
+
+        setTimeout(test6, 1000); // 1초후에 test6함수를 호출!
+    }
+    function f(n){
+        return n < 10 ? '0' + n : n;
+    }
+    test6();
+    /**
+     * Date
+     * - 날짜/시각을 관리하는 자바스크립트 객체
+     * - 현재날짜시각 new Date()
+     * - 특정날짜시각 new Date(1999, 8, 9, 12, 12, 12) 년월일시분초 - 월은 (0월 ~ 11월)로 처리
+     */
+    function test5(){
+        const d = new Date();
+        console.log(d);
+
+        console.log(d.getFullYear()); // 2022
+        console.log(d.getMonth() + 1); // 11
+        console.log(d.getDate()); // 28
+
+        console.log(d.getHours());
+        console.log(d.getMinutes());
+        console.log(d.getSeconds());
+
+        // Unix Second (Epoch Time) : 1970년 1월 1일 자정이후 쌓인 밀리초
+        console.log(d.getTime());
+
+        console.log(new Date(d.getTime())); 
+
+        console.log(d.getDay()); // 0(일) ~ 6(토)
+        
+        const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+        console.log(daysOfWeek[d.getDay()]);
+    }
+    </script>
+
+
+
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+</body>
+</html>

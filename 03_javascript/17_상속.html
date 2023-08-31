@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상속</title>
+</head>
+<body>
+    <h1>상속</h1>
+    <button onclick="test1();">실행</button>
+    <button onclick="test2();">call |apply | bind</button>
+    <button onclick="test3();">Object.create(prototype)</button>
+    <button onclick="test4();">만화책실습문제</button>
+    <script>
+        
+    function Book(title,price,discountRate= .1){
+            this.title=title;
+            this.price=price;
+            this.discountRate=discountRate;
+    
+    }
+   
+    function Novel(title,price,discountRate,type){
+            //1.부모생성자호출
+            Book.apply(this,[title,price,discountRate]); //현재객체 기준으로 부모생성자 호출(매개인자 전달)
+            this.type=type;
+
+    }
+    //2.prototype 생성
+    Novel.prototype = Object.create(Book.prototype);// Book.prototype을 부모로하는 객체생성
+
+    //3.prototype/constructor 연결
+    Novel.prototype.constructor = Novel;
+    /**
+     * 생성자함수간 상속처리 
+     * 1.부모생성자호출 apply
+     * 2.자식prototype객체 생성 Object.create(부모prototype)
+     * 3.prototype/constructor 연결
+     * 
+     */
+    const test1= ()=>{
+        const books = [
+            new Novel('매트릭스','35000',.15,'연애'),
+            new Novel('오라클 완전정복','30000',.2,'SF'),
+            new Novel('네오의하루',15000,0,'심리'),
+    ]
+    console.log(books);
+    };
+
+    /**
+     * this binding 관련함수
+     * - call  this를 바인딩후 호출. 매개인자를 나열해서 전달.
+     * - apply this를 바인딩후 호출. 매개인자를 배열로 전달.
+     * - bind  this를 바인딩후  함수 반환
+     * 
+     */
+    const test2 = () =>{
+        const foo = function (a,b) {
+            console.log(this,this.id,a,b);
+        }
+        foo(1,2); // window undefined 1 2 
+    
+        const obj = {
+            id : 'honggd'
+        };
+
+        foo.call(obj,1,2); //{id: 'honggd'} 'honggd' 1 2
+        foo.apply(obj,[1,2]); //{id: 'honggd'} 'honggd' 1 2
+        const bar = foo.bind(obj);
+        bar(1,2); //{id: 'honggd'} 'honggd' 1 2
+        
+    }
+    
+    function Item(name){
+        this.name=name;
+    }
+    /**
+     * Object.create1(prototype)
+     * -생성자 호출 없이 prototype의 자식객체를 생성
+     * 
+     */
+    const test3= ()=>{
+        const item1 = new Item('에어팟');
+        console.dir(item1);
+        console.log(item1.__proto__);
+    
+        const item2 = Object.create(Item.prototype);
+        console.dir(item2); //생성자를 호출하지 않아서 속성이 없음.....
+        item2.prototype.constructor =item2;
+
+    }
+
+    // //     function Book(title,price,discountRate= .1){
+    //     this.title=title;
+    //         this.price=price;
+    //         this.discountRate=discountRate;
+    
+
+    function Comic(title,price,discountRate,complite){
+        Book.apply(this,[title,price,discountRate]);       //Book.call(this,title,price,discountRate);   콜로 한다면 이렇게
+            this.complite= complite;
+    }
+     Comic.prototype=Object.create(Book.prototype);
+     Comic.prototype.constructor=Comic;
+    const test4 =()=>{
+        const comics = [
+            new Comic('드래곤볼',5000,0,true),
+            new Comic('원피스',6000,0,false),
+        ];
+
+
+
+
+        comics.forEach((comic)=>{
+            console.log(comic);
+        })
+
+    }
+    </script>
+        <h2>class를 통한 상속</h2>
+        <button onclick="test5()">실행 class를 통한상속</button>
+        <button onclick="test6()">상속</button>
+        
+        <script>
+
+    class Person{
+        //현재객체의 속성
+        address= '서울시 강남구'
+
+        static x = 100;
+        static y = function(){
+            console.log('yyyyyyyyyyy');
+        }
+
+    /**
+     * new연산자사용자시 호출되는 메소드
+       - 생성자안의 this는 현재객체/
+     */
+    constructor(name,phone){
+        this.name=name;
+        this.phone=phone;
+    }
+    /**
+     * 메소드 단축문법 작성시 prototype에 메소드 등록!
+     */
+    hi(){
+        console.log(`안녕하세요 저는 ${this.name}입니다`);
+    }
+    }
+    /**
+     * Dev.protytype = Object.create(Perso.prototype);
+     * Dev.protytype.constructor = Dev;
+     * 
+     * 
+     */
+    class Dev extends Person{
+        constructor(name,phone,lang){ //Person.apply(this,[name,phone])
+        super(name,phone);
+        this.lang=lang;
+        }
+        /**
+         * override
+         */
+        hi(){
+            super.hi();
+            console.log(`저는 ${this.lang}개발자입니다.`);
+            
+        }
+    }
+    /**
+     * class
+     * - 생성자함수의 Syntatic suger.(문법적 기능은 동일한데, 직관적으로 간결히 사용할 수 있는 문법)
+     * 
+     * 기능
+     * -생성자함수 기능구현, 상속구조를 간결히 구현.
+     * -static 키워드를 사용하면 생성자함수에 속성 추가
+     * -현재객체 또는 prototype속성 추가
+     */            
+        const test5 = () =>{
+        const p1 = new Person('홍길동','01012341234');
+        p1.hi();
+        
+        //static
+        console.log(Person.x);
+        Person.y();
+        }
+
+        /**
+         * 클래스를 통한 상속
+         */
+        const test6=()=>{
+            const devs = [
+                new Dev('홍길동','01012341234','js'),
+                new Dev('신사임당','01099999900','java'),
+                new Dev('이순신','01094346599900','C++'),
+            ];
+        
+        
+            console.log(devs);
+            devs.forEach((dev)=>{
+                dev.hi();
+            })
+        }
+
+
+
+        </script>
+
+
+
+
+</body>
+</html>
