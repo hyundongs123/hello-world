@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연산자</title>
+</head>
+<body>
+        <h1>연산자</h1>
+        <h2>엄격비교연산자</h2>
+
+    <button onclick="test1();">실행</button>
+    
+    <script>
+        /**
+         * ===타입과 값이 모두 일치해야 true 반환.
+         * !==타입 또는 갑싱 하나라도 달라야 true반환
+         * 
+         * 
+         */
+
+
+        function test1(){
+            console.log(3===3);     //treu
+            console.log('3'==='3'); //true
+            console.log('3'===3);   //false
+
+            console.log(3 !==3);     //false
+            console.log('3'!==3);   //false
+            console.log('3'!==3);   //true
+        }
+    </script>
+
+    <h2>짦은 조건문</h2>   
+    <button onclick="test2();">실행</button>
+
+    <script>
+    /**
+     * a &&실행문
+         -a 가 true 인경우만 실행
+     b||실행문
+        -b가 false인 경우만 실행
+        실행문에는 return 불가능
+        
+    */
+
+        function test2(){
+        
+         const n = Math.floor(Math.random()*100+1);
+            console.log(n);
+
+            n%2== 0 && console.log("짝");
+            n%2== 0 || console.log("홀");
+        
+            const elem = document.querySelector("h1");
+
+            elem && (elem.innerHTML= "뿜")
+        
+            //p태그가 있는지 검사해서 없다면 ,body에 마지막에 추가하는 짧은 조건문 생성
+            document.querySelector('p') || (document.body.innerHTML +='<p>🎂</p>');
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        }
+
+
+    </script>
+
+
+    </body>
+</html>

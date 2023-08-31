@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>window</title>
+</head>
+<body>
+    <h1>window</h1>
+    <!--
+        window객체
+        웹페이지의 모든 자원을 관리하는 최상위 객체
+        -window ,this , globalThis 등을 통해 접근
+        -Bom Browser Object Model navigator,location, history, screen,frames...
+        -Dom Documnet Object Model
+        -javascript String Number Object ...
+
+    -->
+    <h2>open</h2>
+    <button onclick="test1()">실행</button>
+
+    <script>
+    /**
+    * open (path,name(target),spec)
+    * -path 오픈할 파일주소
+    * -name(target) 새 윈도우객체의 이름(_self인경우 현재탭에 오픈 , '//_blacnk인경우 새탭에 오픈)
+    * -spec 팝업크기/위치
+    * -
+    */
+    const test1 =()=>{
+       const popup= open('https://naver.com','myPopup','_blank','width=500px,height=500px,left=300px,top=300px')
+        console.log(popup);
+        
+        setTimeout(()=>{
+            popup.alert(123);
+        },3000)
+    }
+
+    </script>
+    <h2>Timer api</h2>
+    <button onclick="test2()">timeout실행</button>
+    <button onclick="clearTimeout(timeoutId)">timeout취소</button>
+    <button onclick="test3()">interval 실행</button>
+    <button onclick="clearInterval(intervalId)">interval 취소</button>
+    <button onclick="test4()">실습문제 카운트다운</button>
+    <h3 id="countDown">10</h3>
+    <script>
+    
+    const test4=()=>{
+        let num = parseInt(countDown.innerHTML)
+        const intervalId=setInterval(()=>{
+            countDown.innerHTML= --num;
+            if(num==0){
+                clearInterval(intervalId)
+                document.body.style.color='red';
+            }
+        },1000)
+
+    }
+
+
+    let timeoutId
+    /**
+     * setTimeout(f,milis)
+     * clearTimeout(timeoutId)
+     */
+    
+    const test2 = () =>{
+        const f =()=>{
+            alert('hellorword~~~~~~~~~~~~')
+        }
+        timeoutId= setTimeout(f,2000)
+       
+    }
+    /**
+     * setInterval(f,milis)
+     * -milis초 이후 milis초간격으로 f실행
+     * clearInterval(intervalId)
+     * 
+     */
+    let intervalId;
+    const test3 =()=>{
+        let num = 0;
+        intervalId=setInterval(() => {
+            num++;
+            console.log(num);
+
+        }, 1000);
+
+    }
+    </script>
+
+    <h2>Bom</h2>
+    <h3>navigator</h3>
+    <button onclick="test5()">실행</button>
+    
+    <script>
+        /**
+         * navigator
+         * - brower에 대한 정보를 가진 객체
+         * - userAgent
+         */
+        const test5 =()=>{
+            console.log(navigator);
+            console.log(navigator.userAgent);
+        }
+    </script>
+    <h3>location</h3>
+    <button onclick="test6()">실행</button>
+    <button onclick="location.href='https://naver.com';">페이지이동</button>
+    <button onclick="location.reload">새로고침</button>
+
+    <script>
+        /**
+         * location
+         * 브라우져 주소창 관련 정보를 가진 객체
+         * href,protocol,hostname,port,origin,pathname,sear
+         */
+        const test6=()=>{
+            console.log(location);
+        }
+
+    </script>
+
+    <h3>history</h3>
+    <button onclick="test7()">실행</button>
+    <button onclick="history.back()">뒤로가기</button>
+    <button onclick="history.forward()">앞으로가기</button>
+    <button onclick="history.go(prompt('이동할 수를 입력하세요'),0)">이동</button>  <!--0은 새로고침-->
+    <script>
+        
+        /**
+         * history
+         * 방문기록관련 정보를 가진 객체
+         * 
+         */
+        const test7=()=>{
+            console.log(history)
+        }
+    </script>
+
+    <h3>screen</h3>
+    <button onclick="test8()">실행</button>
+    <script>
+        /**
+         * screen
+         * -브라우져가 아닌 사용중인 모니터(h.w)에 대한 정보를 가진 객체
+         * 
+         */
+
+    const test8=()=>{
+        console.log(screen);
+        const w =300; h=300;
+        const {width,height,availWidth,availHeight,avilaLeft,availTop} =screen;
+        const left =availHeight+ (width-w)/2;
+        const top =availTop+ (height-h)/2
+        
+        
+        open('index.html','',`width=${w}px,height=${h}px,left=${left}px,top=${top}px`)
+    }
+    </script>
+
+
+
+
+
+</body>
+</html>

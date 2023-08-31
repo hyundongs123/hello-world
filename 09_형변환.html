@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>형변환</title>
+</head>
+<body>
+    
+    <h1>형변환</h1>
+    
+    <h2>산술연산관련</h2>
+    <button onclick="test1();">실행</button>
+     <script>
+    function test1(){
+    /**
+     * 자바에서는 숫자와 문자열사이에 +연산만 허용.
+     * 자바스크립트에서는 숫자와 문자열사이에 + - * / %  연산 허용.
+     * - * / % 숫자로 형변환 가능한 경우만
+     * 
+     */
+    console.log(3+"3",typeof (3+"3")); //33 string
+    console.log(3+"abc",typeof (3+"abc")); //3abc string
+   
+    console.log(3-"3",typeof (3-"3")); // 0 number
+    console.log(3*"3",typeof (3*"3")); // 9 number
+    console.log(3/"3",typeof (3/"3")); // 1 number
+    console.log(3%"3",typeof (3%"3")); // 0 number
+    
+    console.log(3 *"abc",typeof (3*"abc")); // NaN number
+    
+    console.log(3=="3",typeof(3=="3"));
+    console.log(3 !="3",typeof(3 !="3"));
+    //엄격 동등 비교연산자 타입과 값이 모두 일치하는지 검사 (자동형변환 없음)
+    console.log(3==="3" ,typeof (3==="3")) //  false boolean
+    //타입 또는 값중 하나라도 다르면 true 반환 
+    console.log(3!=="3" ,typeof (3!=="3")) //  true  boolean 
+
+}
+     </script>
+     <h2>숫자형변환</h2>
+     <button onclick="test2();">실행</button>
+     <form action="javascript:test3()">
+         <input type="number" name="" id="num1"placeholder="숫자1">
+         <input type="number" name="" id="num2"placeholder="숫자2">
+         <button>확인</button>
+         <h4 id="result"></h4>
+     </form>
+
+     <script>
+    /*
+    실습문제 #num1 , #num2 의 입력값 더해 출력하기
+    */
+    function test3(){
+        let num1val = num1.value;
+        let num2val = num2.value;
+        const sum =  Number(num1val) +Number(num2val);
+        
+        if(isNaN(sum))
+        result.innerHTML = '정상적인 숫자를 입력하세요';
+        else
+        result.innerHTML= sum;
+    
+    }
+
+    /**
+     * Number(numStr) -정수/실수 변환 .변환불가 문자가 하나라도 포함되어있으면 NaN 반환.
+     * parseInt(numStr) -정수로 변환 .변환불가 문자가 나오기 전까지 변환.
+     * parseFloat(numStr) -실수로 변환 변환불가 문자가 나오기 전까지 변환.
+     */
+    function test2(){
+        let numStr = '1234.56';
+        console.log(Number(numStr),typeof Number(numStr));  //1234.56 number
+        console.log(parseInt(numStr),typeof parseInt(numStr)); //1234 number버림 
+        console.log(parseFloat(numStr),typeof parseFloat(numStr)); // 1234.56 number
+        
+        numStr = '1234.56원';
+        console.log(Number(numStr),typeof Number(numStr));  //1234.56 number
+        console.log(parseInt(numStr),typeof parseInt(numStr)); //1234 number버림 
+        console.log(parseFloat(numStr),typeof parseFloat(numStr)); // 1234.56 number
+        
+    
+    }
+     </script>
+
+     <h2>논리형으로 형변환</h2>
+     <button onclick="test4();">실행</button>
+     <script>
+    /*
+     모든값, 변수는 boolean으로 암묵적형변환 지원
+     -값이 있다면 true : 100, -1, 12.34 , '안녕'
+     -값이 없다면 false : 0 , 0.0 , undefined , null , NaN
+    
+     */
+
+    function test4(){
+        console.log(Boolean(100));        //true
+        console.log(Boolean(-1));
+        console.log(Boolean('하이'));
+        console.log(Boolean([]));//빈배열
+        console.log(Boolean({}));//빈객체
+        console.log(Boolean(Infinity));   //true
+
+        console.log(Boolean(0));          //false
+        console.log(Boolean(0.0));
+        console.log(Boolean(""));
+        console.log(Boolean(''));
+        console.log(Boolean(undefined));
+        console.log(Boolean(null));
+        console.log(Boolean(NaN));
+    
+        console.log(10/0,typeof (10/0)); //infinity number
+
+    }
+
+     </script>
+
+</body>
+</html>

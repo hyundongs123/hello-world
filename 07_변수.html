@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>변수</title>
+</head>
+<body>
+    <h1>변수</h1>
+
+    <script>
+        //전역변수 global variable : 페이지 전체에서 접근 가능한 변수
+        //지역변수 local variable : 특정 지역에서만 접근 가능한 변수
+        // -function scope 함수안에서만 유효 var 
+        //      -var로 선언된 전역변수는 window객체의 속성으로 등록.
+        // -block scope 블럭안에서만 유효 let|const
+
+        var a = 10;//전역변수
+        var a = 11;//var는 변수 중복선언을 허용한다.
+        console.log(a);
+        
+        function foo(){
+            var a = 90;
+            var b = 20;//지역변수
+            console.log(a); //90
+            console.log(b); //20
+            
+            if(true){
+                var b =30;                
+            }
+            console.log(b);
+        }
+        foo();
+        // console.log(b);   07_변수.html:26 Uncaught ReferenceError: b is not defined
+        console.log(a);
+        // console.log(b);
+
+        for( var i = 0 ; i <10 ; i++);
+            console.log(i);
+    
+        //let | const
+        let m = 10;
+        // let m = 10;  Identifier 'm' has already been declared (at
+        const N =7;
+        // N=9; Uncaught TypeError: Assignment to constant variable.at
+
+        for( let k = 0 ; k <10 ; k++){
+
+        }
+            // console.log(k);
+
+
+
+        function bar(){
+            let j = 8;
+
+            if(true){
+                let j = 88;
+            }
+            console.log(j); //8
+        }
+        bar();
+
+    </script>
+</body>
+</html>

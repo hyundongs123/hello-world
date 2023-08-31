@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body>
+    <h1>DOM</h1>
+    <!-- 
+        Documnet Object Model
+        -documnet객체하위에 작성한 html 모든 태그가 계층구조로 저장됨.
+        -DOM Tree 
+        -모든 태그객체는 NOde,Element의 후손객체이다.
+     -->
+
+
+     <h2>Node | Element</h2>
+     <div id="sample">
+        <span>Hello world</span>
+        <!-- 주석 -->
+    </div>
+    <button onclick="test1()">실행</button>
+
+    <script>
+        /**
+         *  Node
+         * - Text Node
+         * - Comment Node
+         * - Element Node
+         * 
+         *  firstChild | lastChild | childNodes | nextSibling | previousSibling | parentNode ...
+         *  contans()  |haschildNodes() | appendChild() | removeChild() | replaceChild()...
+         * 
+         * Element 
+         * -firstElementChild | lastElementChild | children | nextElementSibling | previouseElementSibling | parentElement...
+         * -append() | prepend() | before() | after() | insertBefore() | insertAdjacentElement()| insertAdjacentHTML() | replaceChildren()...
+         * 
+         * 
+         * 
+         */
+
+    const test1=()=>{
+        console.dir(sample);
+        console.log(sample.childNodes);
+    }
+    </script>
+
+    <h2>동적 태그 생성</h2>
+    <button onclick="test2()">h2태그생성</button>
+    <button onclick="test3()">img태그생성</button>
+    
+    <script>
+    /**
+    * <>안녕<>
+    */
+    const test2=()=>{
+        const h2 = document.createElement("h2"); //<h2></h2>
+        const text = document.createTextNode("안녕"); //안녕
+        h2.append(text);
+        document.body.appendChild(h2);
+        h2.innerHTML+='나두안녕';
+
+        // document.body.innerHTML += "<h2>안녕</h2>"
+        // 이벤트핸들러 작성
+        h2.onclick =()=>{
+            console.log('클릭');
+        }
+    }
+    
+    /**
+     * <img src="" alt=""/>
+     */
+    
+    const test3 = ()=>{
+        const img = document.createElement("img"); //<img/>
+        img.src= "../sample/image/hyunta.jpg"
+        img.alt= "g현타견";
+        img.style ="width :200px ; margin = 10px; border-radius:50%";
+        img.innerHTML+='현타견'
+        document.body.appendChild(img);
+    }
+    </script>
+
+    <h2>DOM Tree Traversing</h2>
+    <div id="foo">
+        <p id="p1">안녕1</p>
+        <p id="p2">안녕2</p>
+        <p id="p3">안녕3</p>
+        <p id="p4">안녕4</p>
+        <p id="p5">안녕5</p>
+    </div>
+    <button onclick="test4()">자식</button>
+    <button onclick="test5()">형제</button>
+    <button onclick="test6()">부모</button>
+    <button onclick="test7()">실습문제</button>
+    <button onclick="test8()">요소추가 inssertAdjacentElemnet</button>
+    <button onclick="test9()">요소추가 inssertAdjacentHTML</button>
+    
+    <script>
+    /**
+     * 자식방향
+     */    
+    const test4=()=>{
+        console.log(foo.childNodes); //자식노드
+        console.log(foo.children);  //자식 엘레맨트만
+
+        console.log(foo.firstChild);//텍스트노드
+        console.log(foo.firstElementChild); //#p1
+        
+        console.log(foo.lastChild);//텍스트노드
+        console.log(foo.lastElementChild); //#p5
+
+        // foo.innerHTML="";
+        // foo.removeChild(p1);
+        
+    }
+    /**
+     * 형제방향
+     */
+    const test5=()=>{
+        
+        console.log(p3.nextSibling);
+        console.log(p3.nextElementSibling);
+        console.log(p3.previousSibling);
+        console.log(p3.previousElementSibling);
+
+        p3.nextElementSibling.nextElementSibling.style.color='tomato';
+
+    }
+    /**
+     * 부모방향
+     * -parentNode,parentElement 결과가 같다.
+     */
+    const test6=()=>{
+        console.log(p4.parentNode);
+        console.log(p4.parentElement);
+    }
+    /**
+     * #p3에서 출발, #p2 color : pink, #5 color : blue ,부모요소 bgc 지정 
+     * 모든 자식요소 p태그 택스트 hello1,hello2 
+     */
+    
+    const test7=()=>{
+        p3.previousElementSibling.style.color = 'pink';
+        p3.nextElementSibling.nextElementSibling.style.color="blue";
+        p3.parentElement.style.backgroundColor ='beige';
+        [...p3.parentElement.children].forEach((p,index)=>{
+            // p.innerHTML = "Hello" +(index+1)
+            const text =document.createTextNode("Hello"+(index+1))
+            p.replaceChild(text,p.firstChild); //replaceChild(새자식,헌자식)
+        })
+       }
+
+
+       /**
+        * insertAdjacentElement
+        * target.insertAdjacentElement(posiont,newElem)
+        * 
+        * -beforebegin  타겟시작태그 형제앞에 요소로추가
+        * afterbegin    타겟시작태그 자식으로 맨앞에 요소로추가
+        * -beforeend    타겟종료태그 자식으로 마지막에 요소로추가
+        * afterend      타겟종료태그 형제뒤에 요소로추가
+        */
+    const test8 =()=>{
+        
+        const newElem = document.createElement("mark");
+        newElem.append(document.createTextNode('신입'));
+
+        // p3.insertAdjacentElement('beforebegin',newElem)
+        // p3.insertAdjacentElement('afterbegin',newElem)
+        // p3.insertAdjacentElement('beforeend',newElem)
+        p3.insertAdjacentElement('afterend',newElem)
+    }
+
+
+    const test9=()=>{
+        const html = "<mark>신임</mark>"
+        // p3.insertAdjacentHTML('beforebegin',html)
+        // p3.insertAdjacentHTML('afterbegin',html)
+        // p3.insertAdjacentHTML('beforeend',html)
+        p3.insertAdjacentHTML('afterend',html)
+    }
+    </script>
+    
+
+
+
+
+
+
+</body>
+</html>

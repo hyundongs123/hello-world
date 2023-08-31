@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트</title>
+    <script>
+    console.log(1);
+
+    const init = () => {
+        btn2.onclick = () => {
+            console.log('#btn2');
+        };
+        btn2.onclick = function(e){
+            console.log('#btn2-1');
+            console.log(e);
+            console.log(e.target);
+
+            // this용법5. 이벤트핸들러 안에서 this는 이벤트발생객체를 가리킨다. (일반함수)
+
+            console.log(this);
+            console.log(e.target === this); // true
+        };
+
+        btn3.addEventListener('click', (e) => {
+            console.log("#btn3");
+            console.log(e);
+        });
+        btn3.addEventListener('click', (e) => {
+            console.log("#btn3-1");
+            console.log(e);
+        });
+    };
+
+    /**
+     * 페이지 로딩이 끝나면 load이벤트 발생!
+     */
+    // window.onload = () => {}
+    window.onload = init;
+    
+    window.addEventListener('load', () => {
+        console.log(2);
+        // init();
+    });
+
+    
+
+    console.log(3);
+    </script>
+</head>
+<body>
+<!-- <body onload="init();"> -->
+    <h1>이벤트</h1>
+    <!--
+        웹페이지에서 일어나는 사용자의 모든 액션, 네트워크상의 상태변화를 일컫는 용어.
+        이벤트와 이벤트핸들러(함수)를 연결시켜서 관리.
+        A -> B
+
+        이벤트객체 event관련정보를 가진객체. 핸들러 첫번째 인자로 전달
+
+        이벤트발생객체 event가 발생한 태그객체, window등 가리킴.
+            - this용법5. 이벤트핸들러 안에서 this는 이벤트발생객체를 가리킨다. (일반함수)
+    -->
+    <!-- ul>(li>button#btn$)*3 -->
+    <ul>
+        <li><button id="btn1" onclick="console.log('#btn1'); console.log(event);">inline event속성</button></li>
+        <li><button id="btn2">이벤트속성에 핸들러바인딩</button></li>
+        <li><button id="btn3">addEventListener에 등록</button></li>
+    </ul>
+
+    <button id="btn4">이미지 동적생성</button>
+    <div id="target"></div>
+    <script>
+        /**
+         * transition-duration: 2s;
+            transition-property: all;
+            transition-delay: .5s;
+            transition-timing-function:ease-in ;
+         */
+    btn4.addEventListener('click', () => {
+        const img = document.createElement("img");
+        img.src = '../sample/image/hyunta.jpg';
+        img.style = 'width: 300px; border-radius: 50%;';
+        img.alt = '현타견'
+        img.style = "transition-duration :2s; transition-timing-function:ease-in ; transition-timing-function:ease-in ;"
+        target.append(img);
+
+        img.addEventListener('click', (e) => {
+            e.target.src = '../sample/image/city1.PNG';
+        });
+    });
+    </script>
+
+    <h2>Form관련 event</h2>
+    <form action="" name="userSignupFrm">
+        <fieldset>
+            <legend>회원가입</legend>
+            <div>
+                <label for="username">아이디 : </label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div>
+                <label for="password">비밀번호 : </label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div>
+                <label for="password">비밀번호 확인: </label>
+                <input type="password" id="password-confirmation" required>
+            </div>
+            <div>
+                <input type="submit" value="제출">
+            </div>
+        </fieldset>
+    </form>
+    <script>
+    username.addEventListener('focus', (e) => {
+        console.log(e);
+    });
+    username.addEventListener('blur', (e) => {
+        console.log(e);
+        if(e.target.value.length === 0)
+            alert('아이디를 입력해주세요.');
+    });
+
+    document.querySelector("#password-confirmation").addEventListener('blur', (e) => {
+        const passwordVal = password.value;
+        const passwordCfrmVal = e.target.value;
+        if(passwordVal !== passwordCfrmVal){
+            alert("비밀번호가 일치하지 않습니다.");
+            password.select();
+        }
+    });
+    /**
+     * submit을 막는방법 
+     * -onsubmit = ()=>{ return false;},(e)=>{ e.preventDefault();}
+     * -addEventListener('sumbit',(e)=>{e.preventDefault();}   //e.preventDefault이게 제출 막는 역할
+     */
+    document.userSignupFrm.addEventListener('submit', (e) => {
+        console.log(e);
+
+        // 아이디 유효성검사
+        if(!/^\d{4,15}/.test(usernaem.value)){
+            alert('아이디는 4글자이상 15글자이하로 작성해주세요.');
+            e.preventDefault(); 
+            username.select();
+            return; 
+        };
+
+        // 비밀번호 유효성 검사
+        // 길이검사
+        if(!/^\d{4,15}/.test(password.value)){
+            alert('비밀번호는 4글자이상 15글자이하로 작성해주세요.');
+            e.preventDefault();
+            password.select();
+            return;
+        }
+
+        // 일치여부검사
+        const passwordVal = password.value;
+        const passwordCfrmVal = document.querySelector("#password-confirmation").value;
+        if(passwordVal !== passwordCfrmVal){
+            alert("비밀번호가 일치하지 않습니다.");
+            e.preventDefault();
+            password.select();
+            return;
+        }
+
+    });
+    </script>
+
+    <h2>키보드관련</h2>
+    <fieldset>
+        <legend>키입력</legend>
+        <input type="text" name="everything" id="everything">
+        <p id="userInput"></p>
+        <input type="text" name="anything" id="anything">
+    </fieldset>
+    <script>
+    // everything.onkeydown = (e) => {
+    //     console.log('keydown', e.target.value);
+    // };
+    // everything.onkeypress = (e) => {
+    //     console.log('keypress', e.target.value);
+    // };
+    everything.onkeyup = (e) => {           //keyup만 잘써먹자! 방금누른 키보드를 알아챌수있다.
+        console.log('keyup', e);            //
+
+        // if(e.keyCode==='Enter')  이것도 가능하다. 똑같다
+        if(e.keyCode === 13){
+            // alert(e.target.value);
+            // e.target.value = "";
+            // userInput.innerHTML = "";
+            // return;
+
+            // anything.focus();
+            e.target.nextElementSibling.nextElementSibling.focus();
+        }
+
+        userInput.innerHTML = e.target.value;
+    };
+    </script>
+    
+        <h2>이벤트전파</h2>
+        <div id="buble1" class="buble buble1">
+        <div id="buble2" class="buble buble2">
+        <div id="buble3" class="buble buble3"></div>
+        </div>
+        </div>
+        <style>
+            .buble {border: 1px solid black ; padding :20px ;margin: 5px,0;}
+            .buble1 {background-color: lightblue;}
+            .buble2 {background-color: lightcoral;}
+            .buble3 {background-color: lightgreen;}
+
+        </style>
+
+        <script>
+        //     buble1.onclick = (e)=>{
+        //      console.log('#buble1 클릭!',e.target);   
+        //      e.stopPropagation();//이벤트 전파 방지
+        //     }
+        //     buble2.onclick = (e)=>{
+        //      console.log('#buble2 클릭!',e.target);   
+        //     }
+        //     buble3.onclick = (e)=>{
+        //      console.log('#buble3 클릭!',e.target);   
+        //     }
+        // document.body.onclick = (e)=>{
+        //     console.log('body 클릭!');
+        // }
+
+        buble1.onclick =(e)=>{
+            switch(e.target){
+                case buble1 : console.log('#buble1');
+                break;
+                case buble2 : console.log('#buble2');
+                break;
+                case buble3 : console.log('#buble3');
+                break;
+            }
+        }
+        </script>
+
+        <h2 id="title-trigger">트리거</h2>
+        <button id="btn5">실행</button>
+        <script>
+        btn5.onclick=()=>{
+            console.log('#btn5 clcick!');
+        }
+
+        document.querySelector('#title-trigger').onmouseover =()=>{
+            console.log("#title=trekamsd");
+
+            // 해당요소의 이벤트핸들러만 호출!
+
+            const e = new MouseEvent('click');
+            btn5.dispatchEvent(e);
+        }
+        </script>
+    
+</body>
+</html>

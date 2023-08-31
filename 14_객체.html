@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체</title>
+</head>
+<body>
+    
+        <h1>객체</h1>
+        <button onclick="test1()">객체생성1</button>
+        <button onclick="test2()">객체생성2</button>
+    <script>
+        /**
+         * 객체
+         * -속성집합 : 속성명(key),속성값 (Value)
+         * -속성명 : 식별자(변수,공백/특수문자가 포함된 경우 쌍따옴표를 묶어 문자열 사용도 가능)
+         * -속성값 : 모든 자료형 다 가능
+         * 
+         * 객체생성1 -literal
+         */
+    const test1 =() => {
+        const obj = {
+            id : 'honggd',
+            name : '홍길동',
+            age : 33,
+            married : false,
+            hobby : ['축구','농구','야구'],
+            pet : {
+                name :'구리구리',
+                breed: '푸들'
+            },
+            'phone num' : '01012341234',
+            123 : 456
+        };
+        // 속성추가
+        obj.friend = '신사스';
+//          속성제거
+        // obj.friend = undefined; friend 속성은 남아있다.
+        delete obj.friden ; //속성자체 제거
+        console.log(obj);
+        //1.dot notation 
+        console.log(obj.id);
+        console.log(obj.name);
+        console.log(obj.age);
+        console.log(obj.married);
+        console.log(obj.hobby);
+        console.log(obj.pet);
+        console.log(obj.pet.name);
+        // 2. bracket notation -속성명 문자열
+        
+        console.log(obj['name']);
+        console.log(obj['age']);
+        console.log(obj['married']);
+        console.log(obj['hobby']);
+        console.log(obj['hobby'][1]);
+        console.log(obj['hobby'][2]);
+        console.log(obj['pet']);
+        console.log(obj['pet']['name']);
+        console.log(obj['pet']['breed']);
+        
+        console.log(obj['phone num']);
+        console.log(obj['123']);
+    }
+  
+    /**
+     * 객체생성2
+     * new Object();
+     */
+    const test2 =() => {
+        const obj = new Object();
+        obj.name= '세종대왕';
+        obj.birth = '1999-09-09';
+
+        console.log(obj)
+
+    }
+    </script>
+    <br>
+
+    <button onclick="test3();">메소드</button>
+
+    <script>
+        /**
+         * 
+         *메소드 
+         */
+
+
+    const test3 = () =>{
+        const pet = {
+            petname : '복실이',
+            run : function(){
+                //this용법3  일반함수로 선언된 메소드안의 this는 현재객체를 가리킨다.
+                console.log(`${this.petname},이 달린다.~`);
+            },
+            jumb : ()=>{
+                // 메소드는 화살표함수로 작성하지 말자 (비추)
+                // 화살표함수로 작성된 메소드의 this는 windhow를 가리킨다.
+                console.log(`${this.petname},가점프!`);
+            },
+            bark(){
+                console.log(`${this.petname}가 짓는다.`);
+            },
+            eat(eat){
+                console.log(`${this.petname}이 ${eat}먹는다.`)
+            }
+        };
+    
+        console.log(pet);
+        console.log(pet.petname);
+        console.log(pet.run);
+        pet.run();
+        pet.jumb();
+        pet.bark();
+        pet.eat('개껌');
+
+    }
+    </script>
+    <br>
+    <button onclick="test4();">속성순회</button>
+    <button onclick="test5();">toString()</button>
+    
+    <script>
+        /**
+         * 1.for..in
+         * 2.Object.keys() : []
+         * 3.Object.values() : []
+         * 
+         */
+    const test4 = () =>{
+        const obj= {
+            name : 'Nothing phone',
+            price : 500_00,
+            color : ['white','silver','black']
+
+        };
+        
+        //1.for..in
+        for (let key in obj){
+            console.log(key,obj[key]);
+        }
+        console.log('--------------')
+        //2.Object.keys()
+        console.log(Object.keys(obj));
+        Object.keys(obj).forEach((key,index,keys) =>{
+            console.log(key,obj[key]);
+        });
+
+        //3.Object.values()
+        console.log(Object.values(obj));
+        Object.values(obj).forEach((value,index,values) =>{
+            console.log(values,index,values);
+        })
+    }
+
+    /**
+     * toString()
+     * 
+     */
+    const test5 =()=>{
+         const menu = {
+            name : '청국장',
+            price : 9000,
+            ingredient : ['청국장','소금','파','양파','마늘'],
+            restorant : {
+                name:'안동된장',
+                addr: '서울시 간남구 영삼동',
+                toString(){
+                    let str = "{";
+                    Object.keys(this).forEach((key,index,keys)=>{
+                        typeof this[key] !== 'function' && (str += `${key}=${this[key]}${(index != keys.length -2 ? ',':
+                        " " )}`);
+
+                    });
+                    str+"}";
+                    return str;
+                }
+                
+            },
+            toString(){
+                let str ='{ ';
+                for(let key in this){
+                    typeof this[key] !== 'function' && (str += `${key}=${this[key]}`);
+                }
+                str += "}";
+                return str;
+            }
+            }
+            
+            console.log(menu);
+            console.log(menu.toString()) ;//[object Object]
+            console.log(`menu는 ${menu}입니다`);
+        }
+    </script>
+
+</body>
+</html>
