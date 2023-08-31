@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom</title>
+    <script src="./js/jquery-3.6.1.js"></script>
+</head>
+<body>
+    <h1>DOM</h1>
+    <button id="btn1">요소추가</button>
+    <div id="target"></div>
+    <script>
+    $(btn1).on('click',()=>{
+        const $p = $("<p></p>");
+        $p.text("하이");
+        $p.on('click',()=>{
+            console.log(123);
+        })
+        $(target).html($p)
+    })
+
+
+    </script>
+    <h2 id="foo">추가된 요소 이벤트 핸들링</h2>
+    <div class="wrap">
+        <h3>안녕</h3>
+        <h4>Hello</h4>
+    </div>
+    <script>
+    // const h3ClickHandler=()=>{
+    //     const $wrap = $(".wrap");
+    //     const $h3 = $("<h3>안녕</h3>")
+    //     $h3.click(h3ClickHandler)
+    //     $wrap.append($h3);
+    // }
+    // $(".wrap h3").on('click',h3ClickHandler)
+    
+    //이벤트 버블링
+    //자식요소중에 h3태그에서 click 이벤트발생시 처리
+    $(".wrap").on('click','h3',(e)=>{
+        console.log(e.target);
+        
+        const $wrap = $(".wrap");
+        const $h3 = $("<h3>안녕</h3>")
+        $wrap.append($h3);
+    
+    })
+    
+    </script>
+    <button id="btn2">append</button>
+    <button id="btn3">prepend</button>
+    <button id="btn4">after</button>
+    <button id="btn5">before</button>
+    
+    <h2 id="target2">A</h2>
+    <h2 id="target3">A</h2>
+    <h2 id="target4">A</h2>
+    <h2 id="target5">A</h2>
+
+
+    <script>
+    /**
+     * append자식요소로 맨뒤에추가
+     * 
+     */
+    $(btn2).click(()=>{
+        $(target2).append($("<span>B</span>").css("color","lime"));
+
+    });
+    /**
+     * prepend 자식요소로 맨앞에 추가
+     */
+    $(btn3).click(()=>{
+        $(target3).prepend($("<span>B</span>").css("color","lime"));
+    });
+    /**
+     * after 다음 형제요소로 추가
+     */
+    $(btn4).click(()=>{
+        $(target4).after($("<span>B</span>").css("color","lime"));
+    });
+    /**
+     * before 이전 형제요소로 추가
+     */
+    $(btn5).click(()=>{ 
+        $(target5).before($("<span>B</span>").css("color","lime"));
+});
+    </script>
+
+
+    <div class="original">
+        <div class="item"></div>
+    </div>
+    <style>
+    .original{
+        border:1px solid black;
+        padding:5px;
+        margin: 10px 0;
+        min-height: 100px;
+
+    }
+    .item{
+        width:100px;
+        height: 100px;
+        display: inline-block;
+        margin-right:5px;
+        background-color: springgreen;
+    }
+    </style>
+    <button id="btn6">Empty</button>
+    <button id="btn7">clone</button>
+    <button id="btn8">remove</button>
+
+    <script>
+        /**
+         * empty() 자식요소 삭제
+         */
+        $(btn6).click(()=>{
+            $(".original").empty();
+        })
+
+        $(btn7).click(()=>{
+            const $itemCopy= $(".item:eq(0)").clone();
+            console.log($itemCopy);
+            $(document.body).append($itemCopy)
+        })
+
+        $(btn8).clcik(()=>{
+            $(".item").remove();
+            $(document.body).append($removed);
+        })
+    </script>
+
+
+
+</body>
+</html>

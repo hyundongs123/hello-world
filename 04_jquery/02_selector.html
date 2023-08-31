@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 선택자</title>
+    <script src="./js/jquery-3.6.1.js"></script>
+</head>
+<body>
+    <h1>jQuery 선택자</h1>
+    <div>
+        <p class="group1" id="p1">안녕1</p>
+        <p class="group2" id="p2">안녕2</p>
+        <p class="group1" id="p3">안녕3</p>
+        <p class="group2" id="p4">안녕4</p>
+        <p class="group1 group2" id="p5">안녕5</p>
+    </div>
+    <button id="btn1">기본선택자</button>
+    <button id="btn2">js 객체 | jqeury 객체</button>
+    
+    <script>
+    btn1.addEventListener('click',()=>{
+        //jquery 객체는 변수명 $로 시작!    
+        // const $p = $("p");
+        // console.log($p);
+        // $p.css("color","tomato")
+        // $("p").css("color","tomato");
+    
+    // const p1 = document.querySelectorAll("p");
+    // p1.forEach((elem)=>{
+    //     elem.style.color ='red'
+    // });
+    //id가 p3개인 요소에 대해 배경색 지정
+    $("#p3").css("backgroundColor","tomato");
+
+    //class 가 group1인 요소에 대해 글자크기 1.5배 지정
+    $(".group1").css("font-size",'150%')
+    //class 가 group1 , group2인 요소에 대해 밑줄 효과 지정 
+    $(".group1,.group2").css("text-decoration","underline")
+    //title속성이 있는 요소에 대해서 이텔릭테 효과지정
+    $("[title]").css("{font-style",'italic')
+    })
+    
+    
+    btn2.addEventListener('click',()=>{
+        console.log($("p"));        //jquery 객체
+        console.log($("p")[0]);     //js객체 p#p1
+        console.log($("p").get(0));     //js객체 p#p1
+        console.log($("p").get);     //js객체를 요소로 하는 찐배열
+    })
+    
+    </script>
+
+
+    <fieldset>
+        <legend></legend>
+        <input type="text" placeholder="text">
+        <input type="password" placeholder="password">
+        <input type="radio">
+        <input type="checkbox">
+        <input type="button" value="버튼">
+        <hr>
+        <input type="button" id="btn3" value="확인">
+        <select name="" id="">
+            <option value="a">a</option>
+            <option value="b" selected>b</option>
+            <option value="c">c</option>
+        </select>
+        <input type="button" id="btn3" value="확인">
+    </fieldset>
+    
+
+
+    <script>
+        /**
+         * jquery만 제공하는 선택자
+         * :text
+         * :password
+         * :radio
+         * :checkbox
+         * :button
+         * :submit
+         */
+    $("#btn3").click(()=>{
+        $(":text").css('backgroundColor','pink');
+        $(":password").css('backgroundColor','cyan');
+        $(":radio").css('width','32px').css('height','32px');
+        $(":checkbox").css({'width' : '32px','height':'32px'});
+        $(":button").val("ㅋㅋㅋㅋ")
+        $(":selected").css("color","red")
+        console.log($(btn3));
+    
+    });
+
+
+    </script>
+
+
+<table id="people">
+    <thead>
+        <tr>
+            <th>이름</th>
+            <th>혈액형</th>
+            <th>주소</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>홍길동</td>
+            <td>A</td>
+            <td>서울시 강남구</td>
+        </tr>
+        <tr>
+            <td>신사임당</td>
+            <td>AB</td>
+            <td>서울시 강서구</td>
+        </tr>
+        <tr>
+            <td>장영실</td>
+            <td>B</td>
+            <td>서울시 강북구</td>
+        </tr>
+        <tr>
+            <td><a href="#">이순신</a></td>
+            <td>O</td>
+            <td>서울시 강동구</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="2">총원</th>
+            <td>4명</td>
+        </tr>
+    </tfoot>
+</table>
+<button id="btn4">확인</button>
+    <style>
+        table{border:1px solid black ; border-collapse: collapse; margin: 10px;}
+        th,td{border:1px solid black ;padding :5px;}
+    </style>
+    <script>
+    /**
+     * 위치/순서관련
+     * :odd 홀수번째
+     * :even 짝수번째
+     * :frist
+     * :last
+     * 
+     * :eq(n) 인덱스
+     * :gt(n) 특정인덱스보다 큰
+     * :lt(n) 특정인덱스보다 작은요소
+     * 
+     * contains(text) 컨텐츠부분 검사
+     * has(selector) selector에 일치하는 요소를 가진
+     */
+    $(btn4).click(()=>{
+        // const $selected = $("#people tr:odd");  //홀수
+        // const $selected = $("#people tr:even");  //짝수
+        // const $selected = $("#people tr:first");
+        // const $selected = $("#people tr:last");
+        
+        
+        // const $selected = $("#people tr:eq(3)");    //인데스
+        // const $selected = $("#people tr:gt(2)");    // 보다많은
+        // const $selected = $("#people tr:lt(2)");    //less than
+        
+        // const $selected = $("#people tr:contains('A')");  // 자식이 A 잇는
+        const $selected = $("#people tr:has(a)");         //a태그 
+        
+        console.log($selected);
+        $selected.css({
+            backgroundColor : 'tomato',
+            color :'#fff'
+        })
+    })
+    </script>
+</body>
+</html>

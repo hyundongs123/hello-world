@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>attr | prop</title>
+    <script src="../04_jquery/js/jquery-3.6.1.js"></script>
+    <style>
+    .img-wrapper img{
+        width:300px;
+        margin:10px 5px;
+    }
+    </style>
+</head>
+<body>
+    <h1>attr | prop</h1>
+    <div class="img-wrapper">
+        <img src="../sample/image/flower1.PNG" alt="">
+        <img src="../sample/image/flower2.PNG" alt="">
+    </div>
+    <button id="btn1">atter</button>
+    
+    <script>
+        /**
+         * attr 
+         * -태그객체에 작성된 속성에 관련 메소드 ; 작성되어 있지않으면 undefined
+         * -getter : atter(속성명) n개의 요소가 있어도 첫번째 요소값을 반환
+         * -setter : atter(속성명,속성값) n개의 요소에 모두 속성 적용
+         * 
+         * 
+         */
+    $(btn1).click(()=>{
+        const $seleted= $(".img-wrapper img");
+        console.log($seleted);
+        
+        //getter
+        console.log($seleted.attr('src'));
+        //setter
+        $seleted.attr('src','../sample/image/flower3.PNG')
+        
+    })
+    </script>
+
+    <div>
+        <fieldset>
+            <legend>피자주문 prop</legend>
+            <input type="checkbox"  id="checkAll">
+            <label for="checkAll">전체선택</label>
+            <hr>
+            <input type="checkbox" name="pizza" id="pizza1" value="콤비네이션피자" checked>
+            <label for="pizza1">콤비네이션피자</label>
+            <input type="checkbox" name="pizza" id="pizza2" value="페페로니피자" >
+            <label for="pizza2">페페로니피자</label>
+            <input type="checkbox" name="pizza" id="pizza3" value="루꼴라피자">
+            <label for="pizza3">루꼴라피자</label>
+            <hr>
+            <button id="btn3">주문</button>
+
+        </fieldset>
+    </div>
+
+    <script>
+        /**
+         * prop
+         * 자바스크립트 동적제어를 위한 boolean형으로 관리하는 속성메소드
+         * 
+         */
+    $(btn3).click(()=>{
+        const $pizza = $("[name=pizza]")
+        // $pizza.prop("checked",true) //setter
+        // $pizza.prop("checked",false) //setter
+        const $all = $("#checkAll");
+           
+                
+
+        
+        let str ="";
+        $pizza.each((index,elem)=>{
+            // console.log(index,elem);
+            // console.log($(elem).attr('checked')); //태그객체에 checked 속성값
+            // console.log($(elem).prop('checked'));  //체크여부 
+            $(elem).prop('checked') && (str+= $(elem).val()+" "); //jquery 방식
+
+            // elem.checked&&(str+= el.value);
+            
+        })
+    
+        alert(str);
+    
+    })
+
+    $(checkAll).click((e)=>{
+        // $("[name=pizza]").prop('checked',$(checkAll).prop('checked'))
+        $("[name=pizza]").prop('checked',$(e.target).prop('checked'));
+
+    })
+    $("[name=pizza]").click((e)=>{
+        console.log(e.target);
+        const len = $("[name=pizza]").length;
+        const checkdLen =$("[name=pizza]:checked").length;
+        console.log(len,checkdLen);
+        $(checkAll).prop("checked",len===checkdLen);
+    })
+    </script>
+
+</body>
+</html>

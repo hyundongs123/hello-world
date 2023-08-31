@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS</title>
+    <script src="./js/jquery-3.6.1.js"></script>  <!-- 이거보다 밑에 있어야함-->
+    <script src="https://code.jquery.com/color/jquery.color-2.2.0.js" integrity="sha256-gvMJWDHjgDrVSiN6eBI9h7dRfQmsTTsGU/eTT8vpzNg=" crossorigin="anonymous"></script>
+    <style>
+        img{
+            margin: 30px 0;
+            width:300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS</h1>
+
+    <div>
+        <button id="btn1">show</button>
+        <button id="btn2">hide</button>
+        <button id="btn3">toggle</button>
+    </div>
+    <img src="../sample/image/river1.PNG" alt="" id="river">
+    
+    <script>
+    $(btn1).click(()=>{
+        $(river).show(5000,()=>{
+            console.log("show끝");
+        });
+    })
+    $(btn2).click(()=>{
+        $(river).hide(1000,()=>{
+            console.log("hide끝");
+        });
+    })
+    $(btn3).click(()=>{
+        $(river).toggle(1000,()=>{
+            console.log("toggle끝");
+        });
+    })
+
+    </script>
+    <div class="wrapper">
+        <div class="menu">HTML</div>
+        <p class="content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis qui ipsam dolores quasi esse est saepe itaque aspernatur, nihil minus voluptas quis error, dolorum accusamus laborum cum aliquid quod blanditiis.</p>
+        <div class="menu">CSS</div>
+        <p class="content">Perferendis, cumque odio? Ratione cumque quis ex impedit! Impedit asperiores nulla iusto ipsa sint illum officia, voluptas explicabo possimus, natus delectus laudantium perspiciatis, incidunt accusantium porro accusamus assumenda saepe repudiandae.</p>
+        <div class="menu">JAVASCRIPT</div>
+        <p class="content">Numquam porro exercitationem nemo doloremque. Aperiam ex necessitatibus dignissimos quaerat mollitia, natus explicabo! Cupiditate pariatur et, obcaecati repellat, numquam molestiae voluptas illo eaque expedita nisi enim, alias voluptatem sed harum.</p>
+        <div class="menu">JQEURY</div>
+        <p class="content">Ut esse explicabo optio itaque molestiae sint amet cum rem tempora, earum, deleniti consequuntur saepe? Tenetur illum rerum sapiente quia consequatur? Quasi facilis, doloribus consequatur necessitatibus officiis quas ratione delectus?</p>
+        <div class="menu">HTML5API</div>
+        <p class="content">Maxime aliquid quia, rerum aspernatur quibusdam sed natus veniam dolores dicta minima illum assumenda voluptatem neque itaque impedit modi molestias atque suscipit tenetur. Quaerat, quo explicabo neque doloribus expedita nemo?</p>
+    </div>
+
+    <style>
+    .menu{
+        width:300px;
+        height: 30px;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px solid black;
+        padding-top:7px;
+    }
+    .content{
+        width:300px;
+        border-radius: 10px;
+        border: 1px solid gray;
+        background-color: lightgray;
+        margin: 3px;
+        display: none;
+    }
+    </style>
+
+    <script>
+    $(".menu").click((e)=>{
+        // $(e.target).next()
+        // .slideDown(100)
+        // .slideUp(300)
+        // .slideToggle(500)
+        // .slideToggle();
+        $(e.target)
+        .next().slideToggle()
+        .siblings(".content").slideUp();         //siblings 나빼고 형제들
+    })
+    </script>
+
+    <div>
+        <button id="btn4">fadeIn</button>
+        <button id="btn5">fadeOut</button>
+        <button id="btn6">fadeToggle</button>
+    </div>
+    <img src="../sample/image/river2.PNG" alt="" id="river2">
+    <script>
+    $(btn4).click(()=>{
+        $(river2).fadeIn(1000);    
+    });
+    $(btn5).click(()=>{
+        $(river2).fadeOut(1000);
+    });
+    $(btn6).click(()=>{
+        $(river2).fadeToggle(1000);
+
+    });
+
+    </script>
+    <div class="box"></div>
+    <style>
+    .box{
+        width:200px;
+        height: 200px;
+        background-color: orange;
+        margin: 10px;
+        position: relative;
+    }
+    </style>
+    <script>
+    $(document.body).hover(()=>{
+        const style = {
+            width : '300px',
+            height : '300px',
+            'background-color' :'yellow',
+            'border-radius' : '50%',
+            left:'200px'
+        }
+        const style2 ={
+            'background-color' :'yellow',
+            left:'200px'
+        }
+
+        const $box = $(".box");
+        $(".box").animate(style,1000,()=>{
+            $box.animate(style2,3000);
+        })
+   
+   
+    },()=>{
+        $(".box")
+
+    })
+    </script>
+
+
+</body>
+</html>

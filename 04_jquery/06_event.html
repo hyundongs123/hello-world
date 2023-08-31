@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event</title>
+    <script src="./js/jquery-3.6.1.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js%22%3E"> </script> -->
+</head>
+<body>
+        <h1>event</h1>
+        <h2>mouseover|mouseout, mouseenter|mouseleave</h2>
+
+        <!-- <div class="outer">
+            <div class="inner"></div>
+        </div> -->
+
+    <style>
+
+    .outer{
+        width:200px;
+        height:200px;
+        background-color: orange;
+        padding: 50px;
+        margin:20px auto;
+    }
+    .inner{
+        background-color: red;
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+
+    <script>
+    /**
+     * 자식요소 진입시에도 이벤트발생
+     *
+     * 
+     *  
+     */
+
+    // $(".outer")
+    // .mouseover(()=>{
+    //     console.log("mouseover");
+    // }) 
+    // .mouseout(()=>{
+    //     console.log("mouseout");
+    // })
+
+
+    $(".outer")
+        //.mouseenter(()=>{ console.log("mouseenter");})
+        //.mouseleave(()=>console.log("mouseleave"));
+        .hover(
+            ()=>console.log("mouseenter"),
+            ()=>console.log("mouseleave")
+        )
+    </script>
+
+    <h3 id="hellowworld">Hellow world</h3>
+    <style>
+    .reverse{
+        background-color: black;
+        color: white;
+    }
+    </style>
+    
+    <script>
+        $("hellowworld").hover(
+        (e)=>{
+            console.log('sd');
+            $(e.target).addClass('reverse');
+        },
+        (e)=>{
+            $(e.target).removeClass('reverse');
+        }
+    );
+    </script>
+
+    <h2>동적으로 글자수세기</h2>
+
+    <form action="javascript:alert('제출성공')" name="tweeeeeeeeeeeeeterFrm">
+        <fieldset>
+            <legend>tweeeeeeeeeeeeeeeeeter</legend>
+            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+            <p><span id="counter">0</span>/30</p>
+            <br>
+            <input type="submit" value="제출">
+        </fieldset>
+    </form>
+<style>
+    .red{
+        color :red;
+    }
+</style>
+    <script>
+    // $("form[name=tweeeeeeeeeeeeeterFrm")
+    $(document.tweeeeeeeeeeeeeterFrm).submit((e)=>{
+        //form태그는 documnet하위에서 name속성으로 참조가 가능하다.
+        // form태그 하위 input, select,textarea태그등은 name속성으로 참조가 가능하다.
+        console.log(e.target.content);
+        if($(content).val().length>30){
+            alert("글자수가 넘었습니다.")
+            e.preventDefault();
+        }
+
+    })
+
+
+    $(content).keyup(({target})=>{
+        const len = $(target).val().length;
+       const $counter =$(counter);
+        $counter.html(len);
+    
+    if(len>30)
+        $counter.addClass("red")
+    else
+        $counter.removeClass("red")
+    });
+
+
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>traversing</title>
+    <script src="./js/jquery-3.6.1.js"></script>
+</head>
+<body>
+    
+    <h1>traversing</h1>
+
+    <div class="wrap">
+        <div class="type">div.type (great-grandparent)
+            <ul>ul (grandparent)
+                <li>li (direct parent)
+                    <span>span1</span>
+                </li>
+                <li>li (direct parent)
+                    <span>span2</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="type">div.type (grandparent)
+            <p>p (direct parent)
+                <span>span3</span>
+            </p>
+        </div>
+
+        <!-- @실습문제 -->
+        <div class="type test">
+            div.test
+            <ul>
+                ul1
+                <li>li1-1</li>
+                <li>
+                    li1-2
+                    <ul>
+                        ul2
+                        <li>li2-1</li>
+                        <li>li2-2</li>
+                        <li>
+                            li2-3
+                            <ul>
+                                ul3
+                                <li>
+                                    li3
+                                    <span id="fromMe">fromMe</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <style>
+        .wrap * {
+            border: 1px solid lightgray;
+            display: block; /*생략하지 말것. 모든 글자 */
+            padding: 5px;
+            margin: 15px;
+            color: gray;
+        }
+
+        .type {
+            width: 500px;
+        }
+    </style>
+
+    <button id="btn1">부모</button>
+    <button id="btn2">자식</button>
+
+    <script>
+    const style = {
+        color: "red",
+        border : "2px solid red"
+    };
+    /**
+     * parent([selector]) 직계부모(중에 선택자와 일치)
+     * parents([selector]) 모든 조상 (중에 선택자와 일치)
+     * parentsUntill(selector) 선택자에 해당하는  태그전 모든 부모
+     * 
+     */
+    $(btn1).click(()=>{
+    
+        console.log(
+        $("span")
+            // .parent("li")
+            // .parents("div")
+            .parentsUntil("div.wrap")
+            .css(style)
+
+        );
+    
+    })
+    /**
+     * children([selector]) :(선택자와 일치하는)직계 자식
+     * find (selector) : 선택자와 일치하는 모든 자손
+     * 
+     */
+    $(btn2).click(()=>{
+        
+        console.log(
+            $(".wrap")
+            // .children()
+            // .children("ul")
+            .find("li")
+            .css(style)
+        );
+    })
+    </script>
+    <div class="wrap">
+        <p>p</p>
+        <span>span</span>
+        <h1>h1</h1>
+        <h2>h2</h2>
+        <h3>h3</h3>
+        <h4>h4</h4>
+        <p>p</p>
+    </div>
+    <button id="btn3">형제</button>
+    <button id="btn4">실습문제1</button>
+    <button id="btn5">실습문제2</button>
+    <button id="btn6">실습문제3</button>
+    <script>
+    /**
+     * sibling([selector]) (선택자와 일치하는) 모든 형제태그
+     * 
+     * next([selector]) 다음 형제태그
+     * nextAll([selcetor]) 다음 형제태그 모두
+     * nextUntil(selector) 선택자와 일치하는 형제태그 전 모든 태그
+     * 
+     * prev([selector]) 이전 형제태그
+     * prevAll([selcetor]) 이전형제태그 모두
+     * prevUntil(selector) 선택자와 일치하는 형제태그 이후 모든 태그
+     * 
+     */
+        
+    $(btn3).click(()=>{
+        console.log(
+            $(".wrap > h2")
+            // .siblings("p")
+            // .next()
+            // .nextUntil("p")
+            // .prev()
+            // .prevAll()
+            .prevUntil("p")
+            .css(style)
+        );
+        
+    })
+    /**
+     * .wrap으로부터 모든 span 태그 조회
+     * 
+     */
+    $(btn4).click(()=>{
+        
+        console.log(
+            $(".wrap")
+            .find("span")
+            .css(style)
+        );
+    })
+
+     /**
+      * .wrap으로부터 li2-2 li2-3 조회
+      * 
+      */
+     $(btn5).click(()=>{
+        console.log(
+            $(".wrap")
+            .children()
+            .children()
+            .children()
+            .children()
+            .children()
+            .nextAll()
+            .css(style)
+        );
+     })
+     /**
+      * span#fromMe 부터 li2-2조회,li2-3조회
+      * 
+      */
+     $(btn6).click(()=>{
+        console.log(
+            $("span#fromMe")
+            .parent("li")
+            .parent("ul")
+            .parent("li")
+            .css(style)
+            .prev()
+            .css(style)
+        );
+        
+     })
+
+
+    </script>
+
+</body>
+</html>
